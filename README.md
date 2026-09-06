@@ -1,36 +1,72 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Banua English Website
 
-## Getting Started
+Website resmi **English Banua** — lembaga kursus bahasa Inggris, TOEFL, dan IELTS di Banjarmasin, Kalimantan Selatan.
 
-First, run the development server:
+Stack: **Next.js 16**, **React 19**, **Tailwind CSS 4**, **Sanity CMS**.
+
+## Fitur
+
+- Halaman beranda, program, tentang kami, webinar, recording, testimoni, kontak
+- Konten dinamis lewat Sanity
+- UI modern (Framer Motion, Phosphor / Lucide)
+
+## Prasyarat
+
+- Node.js 20+
+- npm
+- Akun Sanity (untuk CMS)
+
+## Setup
 
 ```bash
+npm install
+cp .env.example .env   # isi variabel Sanity
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Buka [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Environment
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Buat `.env` (lihat `.env.example`):
 
-## Learn More
+```env
+NEXT_PUBLIC_SANITY_PROJECT_ID=
+NEXT_PUBLIC_SANITY_DATASET=production
+SANITY_API_READ_TOKEN=
+SANITY_DRAFT_SECRET=
+SANITY_STUDIO_PROJECT_ID=
+SANITY_STUDIO_DATASET=production
+```
 
-To learn more about Next.js, take a look at the following resources:
+Jangan commit file `.env`.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Scripts
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+| Command | Keterangan |
+| --- | --- |
+| `npm run dev` | Dev server Next.js |
+| `npm run build` | Production build |
+| `npm run start` | Jalankan build production |
+| `npm run lint` | ESLint |
+| `npm run studio:dev` | Sanity Studio lokal |
+| `npm run studio:deploy` | Deploy Sanity Studio |
 
-## Deploy on Vercel
+## Struktur
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```
+src/
+  app/           # App Router pages & API
+  components/    # UI sections
+  lib/           # Helpers
+  sanity/        # Schema, client, queries
+public/          # Static assets
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Deploy
+
+Siap untuk Vercel / host Node. Pastikan env Sanity terisi di dashboard hosting.
+
+## Lisensi
+
+Private — © English Banua.
