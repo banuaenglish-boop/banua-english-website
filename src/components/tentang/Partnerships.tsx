@@ -8,8 +8,10 @@ import {
   GlobeHemisphereWest,
 } from "@phosphor-icons/react/dist/ssr";
 import SectionLabel from "@/components/ui/section-label";
+import { siteConfig } from "@/lib/site";
 import { sanityFetch } from "@/sanity/lib/live";
 import { PARTNERS_QUERY } from "@/sanity/lib/queries";
+import type { Partner } from "@/sanity/lib/types";
 
 const channels = [
   {
@@ -24,19 +26,19 @@ const channels = [
     title: "YouTube",
     handle: "@EnglishBanua",
     href: "https://youtube.com/@englishbanua",
-    description: "Recording webinar & tutorial gratis setiap minggu.",
+    description: "Recording webinar & tutorial gratis.",
   },
   {
     icon: <GlobeHemisphereWest size={20} weight="bold" />,
     title: "Webinar",
-    handle: "2-3× per bulan",
+    handle: "Webinar Gratis",
     href: "/webinar",
     description: "Sesi live gratis bersama tutor dan alumni awardee.",
   },
 ];
 
 export default async function Partnerships() {
-  const { data: partners } = await sanityFetch({ query: PARTNERS_QUERY });
+  const { data: partners } = await sanityFetch<Partner[]>({ query: PARTNERS_QUERY });
 
   return (
     <>
@@ -146,8 +148,10 @@ export default async function Partnerships() {
             Konsultasikan targetmu hari ini, kami bantu memetakan jalur
             tercepat menuju skor dan beasiswa impianmu.
           </p>
-          <Link
-            href="/kontak"
+          <a
+            href={siteConfig.waMe}
+            target="_blank"
+            rel="noopener noreferrer"
             className="group inline-flex items-center gap-3 rounded-full bg-white py-2.5 pl-3 pr-6 shadow-lg transition-all duration-300 hover:-translate-y-0.5"
           >
             <span className="flex h-9 w-9 items-center justify-center rounded-full bg-[#2C3E8A] text-white transition-transform duration-300 group-hover:-rotate-45">
@@ -156,7 +160,7 @@ export default async function Partnerships() {
             <span className="font-poppins text-xs font-semibold text-[#2C3E8A] md:text-sm">
               Hubungi Kami Sekarang
             </span>
-          </Link>
+          </a>
         </div>
       </section>
     </>

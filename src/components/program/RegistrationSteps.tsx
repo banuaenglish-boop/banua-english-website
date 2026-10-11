@@ -1,4 +1,3 @@
-import Link from "next/link";
 import {
   ChatCircleText,
   CalendarCheck,
@@ -8,6 +7,7 @@ import {
   WhatsappLogo,
 } from "@phosphor-icons/react/dist/ssr";
 import SectionLabel from "@/components/ui/section-label";
+import { siteConfig } from "@/lib/site";
 
 const steps = [
   {
@@ -58,16 +58,23 @@ export default function RegistrationSteps() {
           </p>
         </div>
 
-        {/* Steps */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-14">
-          {steps.map((step, index) => (
-            <div key={step.number} className="relative">
-              {/* Connector line (desktop) */}
-              {index < steps.length - 1 && (
-                <div className="hidden lg:block absolute top-8 left-[calc(50%+2.5rem)] w-[calc(100%-5rem)] h-0.5 bg-[#2C3E8A]/20" />
-              )}
+        {/* Steps — connector line rendered as a single strip BEHIND the cards */}
+        <div className="relative mb-14">
+          {/* Single continuous line spanning the full 4-col grid at icon-center height (top ≈ 8px + 32px = 40px) */}
+          <div className="hidden lg:block absolute top-[2.5rem] left-[calc(100%/8)] right-[calc(100%/8)] h-0.5 bg-gradient-to-r from-transparent via-[#2C3E8A]/25 to-transparent pointer-events-none" />
 
-              <div className="flex flex-col items-center text-center h-full rounded-3xl border border-gray-100 bg-white p-6 shadow-md transition-all duration-500 hover:-translate-y-1.5 hover:shadow-lg">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {steps.map((step, index) => (
+              <div key={step.number} className="relative flex flex-col items-center text-center rounded-3xl border border-gray-100 bg-white p-6 shadow-md transition-all duration-500 hover:-translate-y-1.5 hover:shadow-lg">
+                {/* Arrow connector between cards (sits between each card at icon level) */}
+                {index < steps.length - 1 && (
+                  <div className="hidden lg:flex absolute -right-3.5 top-[2.25rem] z-10 h-7 w-7 items-center justify-center rounded-full border border-gray-100 bg-white shadow-sm text-[#2C3E8A]">
+                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                      <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                  </div>
+                )}
+
                 <div className="relative mb-4">
                   <span className="flex h-16 w-16 items-center justify-center rounded-2xl bg-[#2C3E8A] text-white shadow-lg">
                     {step.icon}
@@ -83,23 +90,25 @@ export default function RegistrationSteps() {
                   {step.description}
                 </p>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
 
         {/* CTA */}
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-          <Link
-            href="/kontak"
+          <a
+            href={siteConfig.waMe}
+            target="_blank"
+            rel="noopener noreferrer"
             className="group flex items-center gap-3 bg-[#2C3E8A] hover:bg-[#1a2557] text-white pl-3 pr-6 py-3 rounded-full font-poppins font-semibold text-sm transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-0.5"
           >
             <span className="flex h-9 w-9 items-center justify-center rounded-full bg-white/15 transition-transform duration-300 group-hover:-rotate-45">
               <ArrowRight size={16} weight="bold" />
             </span>
             Daftar Sekarang
-          </Link>
+          </a>
           <a
-            href="https://wa.me/6281234567890"
+            href={siteConfig.waMe}
             target="_blank"
             rel="noopener noreferrer"
             className="group flex items-center gap-2 border-2 border-[#2C3E8A] text-[#2C3E8A] hover:bg-[#2C3E8A] hover:text-white px-6 py-3 rounded-full font-poppins font-semibold text-sm transition-all duration-300"

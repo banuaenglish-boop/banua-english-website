@@ -1,11 +1,4 @@
-import { Check } from "@phosphor-icons/react/dist/ssr";
 import SectionLabel from "@/components/ui/section-label";
-
-const heroStats = [
-  { title: "10.000+", subtitle: "Alumni Seluruh Indonesia" },
-  { title: "98%", subtitle: "Mencapai Target Skor" },
-  { title: "85%", subtitle: "Lolos Beasiswa Impian" },
-];
 
 const destinationLogos = [
   "Melbourne",
@@ -30,32 +23,10 @@ export default function TestimoniHero() {
             Mereka Sudah <span className="text-[#FFD700]">Membuktikan</span>
           </h1>
           <p className="text-white/70 text-sm md:text-base font-inter leading-relaxed mb-10">
-            Ribuan alumni telah membuktikan, English Banua bukan sekadar kursus,
-            tapi investasi masa depan. Dari skor IELTS 8.5 hingga diterima di
-            universitas top dunia.
+            Kenali pengalaman peserta IELTS dan TOEFL di English Banua,
+            dari kesan selama belajar hingga cerita perjalanan mereka.
           </p>
 
-          {/* Stats */}
-          <div className="grid grid-cols-3 gap-4 md:gap-6">
-            {heroStats.map((stat) => (
-              <div
-                key={stat.title}
-                className="rounded-2xl border border-white/10 bg-white/5 p-4 md:p-6"
-              >
-                <div className="flex items-center justify-center gap-2 mb-2">
-                  <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#FFD700] text-[#2C3E8A]">
-                    <Check size={11} weight="bold" />
-                  </span>
-                  <h3 className="font-poppins font-bold text-xl md:text-2xl text-white leading-none">
-                    {stat.title}
-                  </h3>
-                </div>
-                <p className="text-[10px] md:text-xs text-white/60 font-medium leading-snug">
-                  {stat.subtitle}
-                </p>
-              </div>
-            ))}
-          </div>
         </div>
 
         {/* Destination marquee strip */}

@@ -8,17 +8,17 @@ import {
   Phone,
   ArrowRight,
 } from "@phosphor-icons/react/dist/ssr";
+import { siteConfig, socialUrls, hoursDisplay } from "@/lib/site";
 
-const whatsappUrl = "https://wa.me/6281234567890";
+const whatsappUrl = siteConfig.waMe;
 
 const navLinks = [
   { href: "/", label: "Home" },
   { href: "/program", label: "Kelas & Program" },
   { href: "/webinar", label: "Webinar" },
-  { href: "/recording", label: "Recording" },
   { href: "/testimoni", label: "Alumni" },
+  { href: "/cerita-banua", label: "Cerita Banua" },
   { href: "/tentang-kami", label: "Tentang Kami" },
-  { href: "/kontak", label: "Kontak" },
 ];
 
 export default function Footer() {
@@ -52,7 +52,7 @@ export default function Footer() {
             </p>
             <div className="flex items-center gap-3">
               <a
-                href="https://instagram.com/englishbanua"
+                href={socialUrls.instagram}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Instagram English Banua"
@@ -61,7 +61,7 @@ export default function Footer() {
                 <InstagramLogo size={18} weight="bold" />
               </a>
               <a
-                href="https://youtube.com/@englishbanua"
+                href={socialUrls.youtube}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="YouTube English Banua"
@@ -152,7 +152,7 @@ export default function Footer() {
                   rel="noopener noreferrer"
                   className="text-sm text-white/60 font-inter transition-colors hover:text-white"
                 >
-                  +62 812-3456-7890
+                  {siteConfig.phoneDisplay}
                 </a>
               </li>
               <li className="flex items-start gap-3">
@@ -160,10 +160,10 @@ export default function Footer() {
                   <EnvelopeSimple size={15} weight="bold" />
                 </span>
                 <a
-                  href="mailto:hello@englishbanua.com"
+                  href={`mailto:${siteConfig.email}`}
                   className="text-sm text-white/60 font-inter transition-colors hover:text-white"
                 >
-                  hello@englishbanua.com
+                  {siteConfig.email}
                 </a>
               </li>
               <li className="flex items-start gap-3">
@@ -171,7 +171,7 @@ export default function Footer() {
                   <Phone size={15} weight="bold" />
                 </span>
                 <p className="text-sm text-white/60 font-inter leading-relaxed">
-                  Senin-Sabtu, 09.00-17.00 WITA
+                  {hoursDisplay}
                 </p>
               </li>
             </ul>

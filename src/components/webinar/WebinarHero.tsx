@@ -13,17 +13,17 @@ import SectionLabel from "@/components/ui/section-label";
 const stats = [
   {
     icon: <VideoCamera size={20} weight="bold" />,
-    value: "2-3×",
-    label: "Webinar per bulan",
+    value: "Online",
+    label: "Live via Zoom",
   },
   {
     icon: <Users size={20} weight="bold" />,
-    value: "1000+",
-    label: "Peserta per sesi",
+    value: "Awardee",
+    label: "Berbagi pengalaman beasiswa",
   },
   {
     icon: <GlobeHemisphereWest size={20} weight="bold" />,
-    value: "100%",
+    value: "Gratis",
     label: "Gratis & terbuka",
   },
 ];
@@ -63,7 +63,7 @@ export default function WebinarHero() {
                 </span>
               </Link>
               <Link
-                href="/recording"
+                href="#recording"
                 className="group flex items-center gap-2 text-white/80 hover:text-white text-sm font-semibold transition-colors"
               >
                 <PlayCircle size={18} weight="bold" />
@@ -97,10 +97,10 @@ export default function WebinarHero() {
           {/* Right: featured webinar poster */}
           <div className="hidden lg:flex animate-fade-up [animation-delay:200ms] relative justify-end">
             <div className="relative w-full max-w-md overflow-hidden rounded-[2rem] border border-white/15 shadow-2xl">
-              {/* ponytail: dummy poster. Swap src for the real poster (portrait 3:4). */}
+              {/* Featured real webinar poster */}
               <Image
-                src="https://images.unsplash.com/photo-1543269865-cbf427effbad?auto=format&fit=crop&q=80&w=800&h=1066"
-                alt="Poster webinar Strategi Essay LPDP dari Nol sampai Lolos"
+                src="/webinar_dummy/webinar-1.jpg"
+                alt="Poster Webinar Beasiswa Terbaru English Banua"
                 width={800}
                 height={1066}
                 className="aspect-[3/4] w-full object-cover"

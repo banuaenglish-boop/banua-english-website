@@ -67,7 +67,7 @@ export const WEBINARS_QUERY = defineQuery(`
 
 export const HOME_WEBINARS_QUERY = defineQuery(`
   *[_type == "webinar" && featuredOnHome == true] | order(date desc)[0...5] {
-    _id, title,
+    _id, title, date,
     "poster": poster${img("w=700&h=1000&fit=crop")}
   }
 `);
@@ -93,8 +93,8 @@ export const HOME_VIDEOS_QUERY = defineQuery(`
 
 export const TESTIMONIALS_QUERY = defineQuery(`
   *[_type == "testimonial"] | order(order asc, _createdAt asc) {
-    _id, name, program, programLabel, score, achievement, university, text,
-    "avatar": avatar${img("w=200&h=200&fit=crop")}
+    _id, name, program, programLabel, score, achievement, university, text, status, tutor,
+    "avatar": coalesce(avatar${img("w=200&h=200&fit=crop")}, "")
   }
 `);
 
@@ -103,10 +103,26 @@ export const HOME_TESTIMONIALS_QUERY = defineQuery(`
     _id, name, score, university,
     "role": coalesce(role, score),
     "text": coalesce(shortText, text),
-    "avatar": avatar${img("w=100&h=100&fit=crop")}
+    "avatar": coalesce(avatar${img("w=100&h=100&fit=crop")}, "")
   }
 `);
 
 export const FAQS_QUERY = defineQuery(`
   *[_type == "faq"] | order(order asc, _createdAt asc) { _id, question, answer }
+`);
+
+export const STORIES_QUERY = defineQuery(`
+  *[_type == "banuaStory" && defined(image.asset) && defined(caption)]
+    | order(order asc, _createdAt desc) {
+      _id, caption, "alt": caption, imagePosition,
+      "image": image${img("w=1200&fit=max")}
+    }
+`);
+
+export const HOME_STORIES_QUERY = defineQuery(`
+  *[_type == "banuaStory" && featuredOnHome == true && defined(image.asset) && defined(caption)]
+    | order(order asc, _createdAt desc)[0...3] {
+      _id, caption, "alt": caption, imagePosition,
+      "image": image${img("w=1200&fit=max")}
+    }
 `);

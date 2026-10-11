@@ -3,11 +3,15 @@
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { List, X, CaretDown } from "@phosphor-icons/react/dist/ssr";
+import { siteConfig } from "@/lib/site";
+import { usePathname } from "next/navigation";
 
 export default function Navbar() {
+  const pathname = usePathname();
   const [show, setShow] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [programOpen, setProgramOpen] = useState(false);
+  const [programDropdownOpen, setProgramDropdownOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -15,6 +19,17 @@ export default function Navbar() {
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  // Close desktop dropdown on outside click
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (!(e.target as HTMLElement).closest(".program-dropdown-container")) {
+        setProgramDropdownOpen(false);
+      }
+    };
+    document.addEventListener("click", handleClickOutside);
+    return () => document.removeEventListener("click", handleClickOutside);
   }, []);
 
   // Close mobile menu on scroll
@@ -31,7 +46,7 @@ export default function Navbar() {
     <>
       <nav
         className={`fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-5 md:px-8 py-3 md:py-4 bg-white border-b border-gray-100 transition-transform duration-300 ease-in-out shadow-sm ${
-          show ? "translate-y-0" : "-translate-y-full"
+          show || pathname === "/cerita-banua" ? "translate-y-0" : "-translate-y-full"
         }`}
       >
         {/* Logo */}
@@ -48,39 +63,69 @@ export default function Navbar() {
           <Link href="/" className="hover:text-[#33469b] transition-colors">Home</Link>
 
           {/* Dropdown Program & Event */}
-          <div className="relative group py-2">
-            <button className="flex items-center gap-1 hover:text-[#33469b] transition-colors">
-              Program & Event
-              <CaretDown size={12} weight="bold" className="transition-transform duration-200 group-hover:rotate-180" />
+          <div
+            className="relative py-2 program-dropdown-container"
+            onMouseEnter={() => setProgramDropdownOpen(true)}
+            onMouseLeave={() => setProgramDropdownOpen(false)}
+          >
+            <button
+              onClick={() => setProgramDropdownOpen((prev) => !prev)}
+              className="flex items-center gap-1.5 hover:text-[#33469b] transition-colors cursor-pointer py-1"
+              aria-expanded={programDropdownOpen}
+            >
+              <span>Program &amp; Event</span>
+              <CaretDown
+                size={12}
+                weight="bold"
+                className={`transition-transform duration-200 ${programDropdownOpen ? "rotate-180" : ""}`}
+              />
             </button>
-            <div className="absolute top-full left-0 w-48 bg-white border border-gray-100 rounded-xl shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 origin-top translate-y-2 group-hover:translate-y-0">
-              <div className="p-2 flex flex-col gap-1">
-                <Link href="/program" className="px-4 py-2 hover:bg-gray-50 rounded-lg text-[#33469b] transition-colors text-sm font-medium">Kelas & Program</Link>
-                <Link href="/webinar" className="px-4 py-2 hover:bg-gray-50 rounded-lg text-[#33469b] transition-colors text-sm font-medium">Webinar</Link>
-                <Link href="/recording" className="px-4 py-2 hover:bg-gray-50 rounded-lg text-[#33469b] transition-colors text-sm font-medium">Recording</Link>
-              </div>
+            <div
+              className={`absolute top-full left-0 pt-2 w-52 transition-all duration-200 origin-top z-50 ${
+                programDropdownOpen
+                  ? "opacity-100 visible translate-y-0 pointer-events-auto"
+                  : "opacity-0 invisible translate-y-2 pointer-events-none"
+              }`}
+            >
+              <div className="bg-white border border-gray-100 rounded-2xl shadow-xl p-2 flex flex-col gap-1">
+                <Link
+                  href="/program"
+                  onClick={() => setProgramDropdownOpen(false)}
+                  className="px-4 py-2.5 hover:bg-blue-50/80 rounded-xl text-[#1a2557] hover:text-[#33469b] transition-colors text-sm font-medium"
+                >
+                  Kelas &amp; Program
+                </Link>
+                <Link
+                  href="/webinar"
+                  onClick={() => setProgramDropdownOpen(false)}
+                  className="px-4 py-2.5 hover:bg-blue-50/80 rounded-xl text-[#1a2557] hover:text-[#33469b] transition-colors text-sm font-medium"
+                >
+                  Webinar
+                </Link>
+                              </div>
             </div>
           </div>
 
           <Link href="/testimoni" className="hover:text-[#33469b] transition-colors">Alumni</Link>
+          <Link href="/cerita-banua" aria-current={pathname === "/cerita-banua" ? "page" : undefined} className="hover:text-[#33469b] transition-colors">Cerita Banua</Link>
           <Link href="/tentang-kami" className="hover:text-[#33469b] transition-colors">Tentang Kami</Link>
         </div>
 
         {/* Desktop CTA + Mobile Hamburger */}
         <div className="flex items-center gap-3">
           {/* Desktop CTA */}
-          <Link href="/kontak" className="hidden md:block">
+          <a href={siteConfig.waMe} target="_blank" rel="noopener noreferrer" className="hidden md:block">
             <button className="bg-[#33469b] hover:bg-[#233276] text-white px-6 py-2.5 rounded-full text-sm font-semibold transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5">
               Daftar Sekarang
             </button>
-          </Link>
+          </a>
 
           {/* Mobile CTA button (small) */}
-          <Link href="/kontak" className="md:hidden">
+          <a href={siteConfig.waMe} target="_blank" rel="noopener noreferrer" className="md:hidden">
             <button className="bg-[#33469b] text-white px-4 py-2 rounded-full text-xs font-semibold">
               Daftar
             </button>
-          </Link>
+          </a>
 
           {/* Hamburger */}
           <button
@@ -138,7 +183,6 @@ export default function Navbar() {
                 <div className="ml-4 flex flex-col gap-1 mt-1 border-l-2 border-blue-100 pl-3">
                   <Link href="/program" onClick={() => setMenuOpen(false)} className="py-2 px-3 text-sm text-[#33469b] font-medium hover:bg-blue-50 rounded-lg transition-colors">Kelas & Program</Link>
                   <Link href="/webinar" onClick={() => setMenuOpen(false)} className="py-2 px-3 text-sm text-[#33469b] font-medium hover:bg-blue-50 rounded-lg transition-colors">Webinar</Link>
-                  <Link href="/recording" onClick={() => setMenuOpen(false)} className="py-2 px-3 text-sm text-[#33469b] font-medium hover:bg-blue-50 rounded-lg transition-colors">Recording</Link>
                 </div>
               )}
             </div>
@@ -146,21 +190,24 @@ export default function Navbar() {
             <Link href="/testimoni" onClick={() => setMenuOpen(false)} className="flex items-center px-4 py-3 rounded-xl text-[#1a2557] font-semibold hover:bg-gray-50 transition-colors text-sm">
               Alumni
             </Link>
+            <Link href="/cerita-banua" aria-current={pathname === "/cerita-banua" ? "page" : undefined} onClick={() => setMenuOpen(false)} className="flex items-center px-4 py-3 rounded-xl text-[#1a2557] font-semibold hover:bg-gray-50 transition-colors text-sm">
+              Cerita Banua
+            </Link>
             <Link href="/tentang-kami" onClick={() => setMenuOpen(false)} className="flex items-center px-4 py-3 rounded-xl text-[#1a2557] font-semibold hover:bg-gray-50 transition-colors text-sm">
               Tentang Kami
             </Link>
-            <Link href="/kontak" onClick={() => setMenuOpen(false)} className="flex items-center px-4 py-3 rounded-xl text-[#1a2557] font-semibold hover:bg-gray-50 transition-colors text-sm">
+            <a href={siteConfig.waMe} target="_blank" rel="noopener noreferrer" onClick={() => setMenuOpen(false)} className="flex items-center px-4 py-3 rounded-xl text-[#1a2557] font-semibold hover:bg-gray-50 transition-colors text-sm">
               Kontak
-            </Link>
+            </a>
           </nav>
 
           {/* Panel Footer CTA */}
           <div className="p-5 border-t border-gray-100">
-            <Link href="/kontak" onClick={() => setMenuOpen(false)} className="block">
+            <a href={siteConfig.waMe} target="_blank" rel="noopener noreferrer" onClick={() => setMenuOpen(false)} className="block">
               <button className="w-full bg-[#33469b] hover:bg-[#233276] text-white py-3.5 rounded-2xl text-sm font-bold transition-all shadow-lg">
                 Daftar Sekarang
               </button>
-            </Link>
+            </a>
           </div>
         </div>
       </div>

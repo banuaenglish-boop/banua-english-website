@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "eslint",
     "studio:dev": "sanity dev",
-    "studio:deploy": "sanity deploy"
+    "studio:deploy": "sanity deploy",
+    "sanity:seed": "node --use-system-ca scripts/sanity-seed.mjs"
   },
   "dependencies": {
     "@phosphor-icons/react": "^2.1.10",

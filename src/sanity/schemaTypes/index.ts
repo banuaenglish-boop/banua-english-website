@@ -332,6 +332,8 @@ export const webinar = defineType({
       title: "Link Pendaftaran",
       type: "url",
       description: "Kosongkan untuk mengarahkan ke /kontak.",
+      validation: (r) =>
+        r.uri({ scheme: ["https"], allowRelative: false }),
     }),
     featuredOnHome,
   ],
@@ -380,6 +382,8 @@ export const pastWebinar = defineType({
       name: "youtubeUrl",
       title: "Link YouTube",
       type: "url",
+      validation: (r) =>
+        r.uri({ scheme: ["https"], allowRelative: false }),
     }),
     order,
   ],
@@ -444,7 +448,8 @@ export const video = defineType({
       name: "youtubeUrl",
       title: "Link YouTube",
       type: "url",
-      validation: (r) => r.required(),
+      validation: (r) =>
+        r.required().uri({ scheme: ["https"], allowRelative: false }),
     }),
     featuredOnHome,
   ],
@@ -497,14 +502,12 @@ export const testimonial = defineType({
       title: "Skor / Capaian",
       type: "string",
       description: 'Mis. "IELTS 7.0" atau "LPDP Awardee".',
-      validation: (r) => r.required(),
     }),
     defineField({
       name: "achievement",
       title: "Pencapaian",
       type: "string",
       description: 'Mis. "Diterima di The University of Melbourne".',
-      validation: (r) => r.required(),
     }),
     defineField({
       name: "university",
@@ -534,11 +537,21 @@ export const testimonial = defineType({
       description: 'Baris kecil di marquee, mis. "IELTS 7.5 · Awardee LPDP UK".',
     }),
     defineField({
+      name: "status",
+      title: "Status Alumni",
+      type: "string",
+      description: "Mis. Mahasiswa, Bekerja, atau Fresh Graduate.",
+    }),
+    defineField({
+      name: "tutor",
+      title: "Tutor Pendamping",
+      type: "string",
+    }),
+    defineField({
       name: "avatar",
       title: "Foto",
       type: "image",
       options: { hotspot: true },
-      validation: (r) => r.required(),
     }),
     featuredOnHome,
     order,
@@ -569,7 +582,55 @@ export const faq = defineType({
   preview: { select: { title: "question" } },
 });
 
+export const banuaStory = defineType({
+  name: "banuaStory",
+  title: "Cerita Banua",
+  type: "document",
+  fields: [
+    defineField({
+      name: "image",
+      title: "Foto",
+      type: "image",
+      validation: (r) => r.required(),
+    }),
+    defineField({
+      name: "caption",
+      title: "Caption",
+      type: "text",
+      rows: 3,
+      description: "Cukup 1–3 kalimat. Ditampilkan langsung di bawah foto, tanpa judul artikel.",
+      validation: (r) => r.required().max(400),
+    }),
+    defineField({
+      name: "alt",
+      title: "Deskripsi Foto (Aksesibilitas)",
+      type: "string",
+      description: "Jelaskan apa yang terlihat dalam foto untuk pengguna pembaca layar.",
+      hidden: true,
+    }),
+    defineField({
+      name: "imagePosition",
+      title: "Posisi Foto",
+      type: "string",
+      initialValue: "center",
+      hidden: true,
+      description: "Pilih bagian foto yang dipertahankan saat ditampilkan di kartu.",
+      options: { list: [
+        { title: "Tengah", value: "center" },
+        { title: "Atas", value: "center top" },
+        { title: "Sedikit ke bawah", value: "center 62%" },
+        { title: "Bawah", value: "center bottom" },
+      ] },
+    }),
+    { ...featuredOnHome, hidden: true },
+    { ...order, hidden: true },
+  ],
+  orderings: [{ title: "Urutan tampil", name: "orderAsc", by: [{ field: "order", direction: "asc" }] }],
+  preview: { select: { title: "caption", media: "image" } },
+});
+
 export const schemaTypes = [
+  banuaStory,
   program,
   tutor,
   teamMember,

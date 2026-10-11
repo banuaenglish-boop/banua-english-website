@@ -1,179 +1,124 @@
 "use client";
 
+import { useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
-import {
-  ArrowRight,
-  CalendarDots,
-  Clock,
-  VideoCamera,
-  PlayCircle,
-  Sparkle,
-} from "@phosphor-icons/react";
-import { CardStack, type CardStackItem } from "@/components/ui/card-stack";
-import {
-  videoCategoryLabels,
-  type HomeVideo,
-  type HomeWebinar,
-} from "@/sanity/lib/types";
-
+import { ArrowLeft, ArrowRight, CalendarDots, Clock, Play, PlayCircle, VideoCamera } from "@phosphor-icons/react";
+import { formatDateId } from "@/lib/utils";
+import { videoCategoryLabels, type HomeVideo, type HomeWebinar } from "@/sanity/lib/types";
 import SectionLabel from "@/components/ui/section-label";
 
-export default function HomeWebinarRecording({
-  webinars,
-  recordings,
-}: {
-  webinars: HomeWebinar[];
-  recordings: HomeVideo[];
-}) {
-  const upcomingWebinars: CardStackItem[] = webinars.map((webinar) => ({
-    id: webinar._id,
-    title: webinar.title,
-    imageSrc: webinar.poster,
-    href: "/webinar",
-  }));
+const focusRing = "focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#2C3E8A]";
+
+export default function HomeWebinarRecording({ webinars, recordings }: { webinars: HomeWebinar[]; recordings: HomeVideo[] }) {
+  const [selectedId, setSelectedId] = useState(webinars[0]?._id);
+  const selectedIndex = Math.max(0, webinars.findIndex((webinar) => webinar._id === selectedId));
+  const selectedWebinar = webinars[selectedIndex];
+
+  function changeWebinar(direction: number) {
+    const nextIndex = (selectedIndex + direction + webinars.length) % webinars.length;
+    setSelectedId(webinars[nextIndex]._id);
+  }
 
   return (
-    <section className="relative bg-gray-50 section-y overflow-hidden">
-
-      <div className="section-shell relative z-10">
-        {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
+    <section className="relative overflow-hidden bg-gray-50 section-y">
+      <div className="section-shell">
+        <div className="mb-8 flex flex-col justify-between gap-5 md:flex-row md:items-end">
           <div className="max-w-xl">
             <SectionLabel variant="light">Webinar &amp; Recording</SectionLabel>
-            <h2 className="font-poppins font-bold heading-2 text-[#1a2557]">
-              Belajar Gratis dari
-              <br />
-              <span className="text-[#2C3E8A]">Sesi Terbaru Kami</span>
-            </h2>
-            <p className="mt-3 text-gray-500 text-sm font-inter leading-relaxed">
-              Ikuti webinar live bersama mentor &amp; awardee, atau akses rekaman
-              sesi sebelumnya kapan saja, 100% gratis.
-            </p>
+            <h2 className="font-poppins font-bold heading-2 text-[#1a2557]">Belajar Gratis dari<br /><span className="text-[#2C3E8A]">Sesi Terbaru Kami</span></h2>
+            <p className="mt-3 text-sm leading-relaxed text-gray-500">Ikuti webinar bersama mentor &amp; awardee, atau pelajari rekamannya kapan saja. Semuanya gratis.</p>
           </div>
-
-          <div className="flex flex-wrap gap-3">
-            <Link
-              href="/webinar"
-              className="inline-flex items-center gap-2 rounded-full bg-[#2C3E8A] px-5 py-2.5 text-xs font-bold text-white shadow-lg transition-all duration-300 hover:bg-[#1a2557] hover:-translate-y-0.5"
-            >
-              <VideoCamera size={14} weight="bold" />
-              Lihat Semua Webinar
-            </Link>
-            <Link
-              href="/recording"
-              className="inline-flex items-center gap-2 rounded-full border-2 border-[#2C3E8A] px-5 py-2.5 text-xs font-bold text-[#2C3E8A] transition-all duration-300 hover:bg-[#2C3E8A] hover:text-white"
-            >
-              <PlayCircle size={14} weight="bold" />
-              Arsip Recording
-            </Link>
-          </div>
+          <Link href="/webinar" className={`group inline-flex min-h-11 items-center gap-2 self-start rounded-full border border-blue-200 bg-white px-5 text-sm font-semibold text-[#2C3E8A] transition-colors hover:bg-blue-50 ${focusRing}`}>
+            Jelajahi semua sesi <ArrowRight size={16} weight="bold" className="transition-transform motion-safe:group-hover:translate-x-1" />
+          </Link>
         </div>
 
-        {/* Split grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-5 gap-5 items-stretch">
-          {/* Left: 3D Card Stack Upcoming Webinars */}
-          <div className="lg:col-span-3 rounded-3xl border border-blue-100 bg-white p-5 shadow-sm flex flex-col justify-between overflow-hidden">
-            <div>
-              <div className="flex items-center justify-between mb-3">
-                <div className="flex items-center gap-3">
-                  <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-50 text-[#2C3E8A]">
-                    <CalendarDots size={20} weight="bold" />
-                  </span>
-                  <div>
-                    <h3 className="font-poppins font-bold text-base text-[#1a2557]">
-                      Webinar Terdekat
-                    </h3>
-                    <p className="text-[11px] text-gray-400 font-medium">
-                      Gratis • Geser atau klik kartu untuk melihat jadwal
-                    </p>
+        <div className="grid items-stretch gap-5 lg:grid-cols-[1.45fr_1fr]">
+          <div className="flex min-w-0 flex-col overflow-hidden rounded-3xl border border-blue-100 bg-white shadow-sm">
+            <div className="flex items-center gap-3 border-b border-gray-100 px-5 py-5 sm:px-6">
+              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-blue-50 text-[#2C3E8A]"><CalendarDots size={22} weight="duotone" /></span>
+              <div>
+                <h3 className="font-poppins text-base font-bold text-[#1a2557]">Pilihan Webinar</h3>
+                <p className="mt-0.5 text-xs text-gray-500">Kenali peluang studi dari para awardee</p>
+              </div>
+              <span className="ml-auto rounded-full bg-emerald-50 px-3 py-1.5 text-xs font-semibold text-emerald-700">Gratis</span>
+            </div>
+
+            {selectedWebinar ? (
+              <>
+                <div className="grid flex-1 items-center gap-5 p-5 sm:grid-cols-[minmax(0,0.85fr)_minmax(0,1fr)] sm:gap-6 sm:p-6">
+                  <Link href="/webinar#webinar-list" aria-label={`Lihat jadwal ${selectedWebinar.title}`} className={`relative mx-auto block aspect-[3/4] w-full max-w-[240px] overflow-hidden rounded-2xl bg-[#eef2fa] ring-1 ring-blue-100 ${focusRing}`}>
+                    <Image src={selectedWebinar.poster} alt={`Poster ${selectedWebinar.title}`} fill sizes="(min-width: 1024px) 230px, (min-width: 640px) 240px, 70vw" className="object-contain" />
+                  </Link>
+                  <div aria-live="polite" aria-atomic="true" className="min-w-0">
+                    <span className="mb-3 inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-[0.12em] text-[#2C3E8A]"><VideoCamera size={15} weight="bold" /> Webinar pilihan</span>
+                    <h4 className="font-poppins text-xl font-bold leading-snug text-[#1a2557] sm:text-[22px]">{selectedWebinar.title}</h4>
+                    {selectedWebinar.date && <p className="mt-4 flex items-center gap-2 text-sm font-medium text-gray-600"><CalendarDots size={18} className="shrink-0 text-[#2C3E8A]" /><time dateTime={selectedWebinar.date}>{formatDateId(selectedWebinar.date)}</time></p>}
+                    <p className="mt-3 text-sm leading-relaxed text-gray-500">Temukan informasi beasiswa dan pengalaman studi langsung dari narasumber.</p>
+                    <Link href="/webinar#webinar-list" className={`mt-5 inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-[#2C3E8A] px-4 text-sm font-semibold text-white transition-colors hover:bg-[#1a2557] ${focusRing}`}>
+                      Lihat jadwal &amp; daftar <ArrowRight size={16} weight="bold" />
+                    </Link>
                   </div>
                 </div>
-                <span className="hidden sm:inline-flex items-center gap-1.5 rounded-full bg-emerald-50 border border-emerald-200 px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-emerald-700">
-                  <Sparkle size={12} weight="bold" />
-                  Open Registration
-                </span>
-              </div>
 
-              {/* 3D Interactive Card Stack */}
-              <div className="pt-10 pb-1">
-                <CardStack
-                  items={upcomingWebinars}
-                  initialIndex={0}
-                  autoAdvance
-                  intervalMs={3500}
-                  pauseOnHover
-                  cardWidth={210}
-                  cardHeight={295}
-                />
+                {webinars.length > 1 && (
+                  <div className="flex flex-wrap items-center justify-between gap-3 border-t border-gray-100 bg-slate-50/70 px-5 py-4 sm:px-6">
+                    <div className="flex min-w-0 flex-wrap gap-2" role="group" aria-label="Pilih webinar">
+                      {webinars.map((webinar, index) => (
+                        <button key={webinar._id} type="button" onClick={() => setSelectedId(webinar._id)} aria-label={`Tampilkan ${webinar.title}`} aria-pressed={selectedIndex === index} className={`relative h-14 w-11 overflow-hidden rounded-lg border-2 transition-colors ${selectedIndex === index ? "border-[#2C3E8A] ring-2 ring-blue-100" : "border-transparent opacity-60 hover:border-blue-200 hover:opacity-100"} ${focusRing}`}>
+                          <Image src={webinar.poster} alt="" fill sizes="44px" className="object-cover" />
+                        </button>
+                      ))}
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="mr-1 text-xs font-medium tabular-nums text-gray-500">{selectedIndex + 1} / {webinars.length}</span>
+                      <button type="button" onClick={() => changeWebinar(-1)} aria-label="Webinar sebelumnya" className={`flex h-11 w-11 items-center justify-center rounded-full border border-gray-200 bg-white text-[#2C3E8A] transition-colors hover:bg-blue-50 ${focusRing}`}><ArrowLeft size={16} weight="bold" /></button>
+                      <button type="button" onClick={() => changeWebinar(1)} aria-label="Webinar berikutnya" className={`flex h-11 w-11 items-center justify-center rounded-full border border-gray-200 bg-white text-[#2C3E8A] transition-colors hover:bg-blue-50 ${focusRing}`}><ArrowRight size={16} weight="bold" /></button>
+                    </div>
+                  </div>
+                )}
+              </>
+            ) : (
+              <div className="flex flex-1 flex-col items-start justify-center gap-4 p-6">
+                <p className="text-sm leading-relaxed text-gray-500">Jadwal webinar baru akan hadir di sini. Sambil menunggu, kamu bisa belajar dari rekaman sesi sebelumnya.</p>
+                <Link href="/webinar#recording" className={`text-sm font-semibold text-[#2C3E8A] ${focusRing}`}>Jelajahi rekaman <span aria-hidden="true">→</span></Link>
               </div>
-            </div>
+            )}
           </div>
 
-          {/* Right: Past Recordings */}
-          <div className="lg:col-span-2 rounded-3xl bg-[#1a2557] p-5 relative overflow-hidden shadow-sm flex flex-col justify-between">
-
-            <div className="relative z-10">
-              <div className="flex items-center gap-3 mb-4">
-                <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#FFD700] text-[#1a2557]">
-                  <PlayCircle size={20} weight="bold" />
-                </span>
-                <div>
-                  <h3 className="font-poppins font-bold text-base text-white">
-                    Rekaman Terpopuler
-                  </h3>
-                  <p className="text-[11px] text-white/50 font-medium">
-                    Akses kapan saja, gratis
-                  </p>
-                </div>
+          <div className="flex min-w-0 flex-col rounded-3xl bg-[#1a2557] p-5 text-white shadow-sm sm:p-6">
+            <div className="mb-5 flex items-center gap-3">
+              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-[#FFD700] text-[#1a2557]"><PlayCircle size={23} weight="duotone" /></span>
+              <div>
+                <h3 className="font-poppins text-base font-bold">Rekaman Pilihan</h3>
+                <p className="mt-0.5 text-xs text-blue-100/80">Belajar sesuai waktumu, tanpa biaya</p>
               </div>
-
-              <div className="space-y-2.5 mb-4">
-                {recordings.map((recording, index) => (
-                  <Link
-                    key={recording._id}
-                    href="/recording"
-                    className="group flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 p-3 transition-all duration-300 hover:bg-white/10 hover:border-white/20"
-                  >
-                    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-white/10 text-[#FFD700] font-poppins font-bold text-sm">
-                      {index + 1}
-                    </span>
-                    <div className="min-w-0">
-                      <p className="font-poppins font-bold text-xs text-white leading-snug line-clamp-2 mb-1 group-hover:text-[#FFD700] transition-colors">
-                        {recording.title}
-                      </p>
-                      <div className="flex items-center gap-2 text-[10px] text-white/50">
-                        <span className="rounded-full bg-white/10 px-2 py-0.5 font-semibold">
-                          {videoCategoryLabels[recording.category]}
-                        </span>
-                        <span className="flex items-center gap-1">
-                          <Clock size={10} weight="bold" />
-                          {recording.duration}
-                        </span>
-                        <span>{recording.views} views</span>
-                      </div>
+            </div>
+            <div className="flex flex-1 flex-col gap-3">
+              {recordings.map((recording, index) => (
+                <Link key={recording._id} href="/webinar#recording" className="group flex flex-1 items-center gap-3 rounded-2xl border border-white/10 bg-white/[0.06] p-4 transition-colors hover:border-white/25 hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#FFD700]">
+                  <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white/10 text-[#FFD700] transition-colors group-hover:bg-[#FFD700] group-hover:text-[#1a2557]"><Play size={18} weight="fill" /></span>
+                  <div className="min-w-0 flex-1">
+                    <div className="mb-2 flex flex-wrap items-center gap-2 text-[11px]">
+                      <span className="font-semibold uppercase tracking-wider text-[#FFD700]">{videoCategoryLabels[recording.category]}</span>
+                      <span className="text-blue-100/75">•</span>
+                      <span className="inline-flex items-center gap-1 text-blue-100/80"><Clock size={12} />{recording.duration}</span>
                     </div>
-                  </Link>
-                ))}
-              </div>
+                    <h4 className="text-sm font-semibold leading-relaxed text-white group-hover:text-yellow-100">{recording.title}</h4>
+                    {recording.views && <p className="mt-1 text-xs text-blue-100/80">{recording.views} kali ditonton</p>}
+                  </div>
+                  <span className="self-start text-[11px] font-medium tabular-nums text-blue-100/40" aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
+                </Link>
+              ))}
+              {recordings.length === 0 && <p className="py-6 text-sm leading-relaxed text-blue-100">Rekaman baru akan segera tersedia. Cek jadwal webinar untuk menemukan sesi berikutnya.</p>}
             </div>
-
-            <div className="relative z-10 pt-4 border-t border-white/10">
-              <Link
-                href="/recording"
-                className="group inline-flex items-center gap-2 text-xs font-bold text-[#FFD700] hover:underline"
-              >
-                Lihat semua rekaman
-                <ArrowRight
-                  size={12}
-                  weight="bold"
-                  className="transition-transform duration-300 group-hover:translate-x-1"
-                />
-              </Link>
-            </div>
+            <Link href="/webinar#recording" className="mt-5 flex min-h-11 items-center justify-between rounded-xl bg-[#FFD700] px-4 py-3 text-sm font-bold text-[#1a2557] transition-colors hover:bg-yellow-300 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#FFD700]">
+              Lihat semua rekaman <ArrowRight size={17} weight="bold" />
+            </Link>
           </div>
         </div>
       </div>
     </section>
   );
 }
-

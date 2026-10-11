@@ -10,33 +10,33 @@ import {
 } from "@phosphor-icons/react/dist/ssr";
 import { sanityFetch } from "@/sanity/lib/live";
 import { HOME_TUTORS_QUERY } from "@/sanity/lib/queries";
+import type { HomeTutor } from "@/sanity/lib/types";
 
 const values = [
   {
     icon: <GraduationCap size={20} weight="bold" />,
     title: "Tutor Awardee",
-    description: "Semua tutor utama adalah awardee beasiswa S1 & S2.",
+    description: "Tutor online kami adalah awardee LPDP.",
   },
   {
     icon: <Medal size={20} weight="bold" />,
-    title: "Terbukti Berhasil",
-    description: "98% siswa mencapai target skor mereka.",
+    title: "Fokus IELTS & TOEFL",
+    description: "Bimbingan persiapan IELTS dan TOEFL bersama tim tutor kami.",
   },
   {
     icon: <GlobeHemisphereWest size={20} weight="bold" />,
-    title: "Jaringan Global",
-    description: "Alumni tersebar di 15+ negara dunia.",
+    title: "Latar Pendidikan Global",
+    description: "Tutor lulusan universitas di Indonesia, Inggris, dan Australia.",
   },
   {
     icon: <Certificate size={20} weight="bold" />,
     title: "Bersertifikat",
-    description: "Pengalaman mengajar minimal 3 tahun.",
+    description: "Tutor dengan latar belakang TESOL dan pendidikan bahasa Inggris.",
   },
 ];
 
 export default async function HomeTutorPreview() {
-  const { data: tutors } = await sanityFetch({ query: HOME_TUTORS_QUERY });
-
+  const { data: tutors } = await sanityFetch<HomeTutor[]>({ query: HOME_TUTORS_QUERY });
   return (
     <section className="relative bg-white section-y overflow-hidden">
       <div className="section-shell relative z-10">
@@ -44,13 +44,12 @@ export default async function HomeTutorPreview() {
         <div className="max-w-xl mx-auto text-center mb-8">
           <SectionLabel variant="light">Tutor Kami</SectionLabel>
           <h2 className="font-poppins font-bold heading-2 text-[#1a2557] mb-3">
-            Dipandu oleh{" "}
-            <span className="text-[#2C3E8A]">Awardee Sejati</span>
+            Belajar bersama{" "}
+            <span className="text-[#2C3E8A]">Tutor Kami</span>
           </h2>
           <p className="text-gray-500 text-sm font-inter leading-relaxed">
-            Yang membedakan kami: rata-rata tutor kami adalah Awardee beasiswa
-            S1 &amp; S2 dari dalam dan luar negeri. Mereka bukan hanya mengajar,
-            mereka sudah membuktikan jalurnya.
+            Kenali tutor offline dan online English Banua, dengan latar belakang
+            pendidikan, skor bahasa Inggris, dan pengalaman mengajar mereka.
           </p>
         </div>
 

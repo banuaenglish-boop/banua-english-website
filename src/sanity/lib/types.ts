@@ -76,7 +76,7 @@ export type Webinar = {
   poster: string;
 };
 
-export type HomeWebinar = { _id: string; title: string; poster: string };
+export type HomeWebinar = { _id: string; title: string; poster: string; date?: string | null };
 
 export type PastWebinar = {
   _id: string;
@@ -120,6 +120,8 @@ export type Testimonial = {
   university: string;
   text: string;
   avatar: string;
+  status?: string;
+  tutor?: string;
 };
 
 export type HomeTestimonial = {
@@ -133,6 +135,14 @@ export type HomeTestimonial = {
 };
 
 export type Faq = { _id: string; question: string; answer: string };
+
+export type BanuaStory = {
+  _id: string;
+  image: string;
+  alt: string;
+  caption: string;
+  imagePosition?: string | null;
+};
 
 /** Label kategori untuk badge — dipakai di halaman Recording & Homepage. */
 export const videoCategoryLabels: Record<VideoCategory, string> = {

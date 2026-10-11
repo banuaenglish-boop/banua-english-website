@@ -6,18 +6,16 @@ import TestimonialGallery from "@/components/testimoni/TestimonialGallery";
 import SuccessCTA from "@/components/testimoni/SuccessCTA";
 import { sanityFetch } from "@/sanity/lib/live";
 import { TESTIMONIALS_QUERY } from "@/sanity/lib/queries";
+import type { Testimonial } from "@/sanity/lib/types";
 
 export const metadata: Metadata = {
   title: "Testimoni Alumni | English Banua",
   description:
-    "Kisah sukses alumni English Banua: diterima di University of Melbourne, NUS, Osaka, Cranfield, dan lolos beasiswa LPDP dengan skor IELTS hingga 8.5.",
+    "Pengalaman peserta Private TOEFL Online dan Private IELTS Offline bersama tutor English Banua.",
 };
 
 export default async function TestimoniPage() {
-  const { data: testimonials } = await sanityFetch({
-    query: TESTIMONIALS_QUERY,
-  });
-
+  const { data: testimonials } = await sanityFetch<Testimonial[]>({ query: TESTIMONIALS_QUERY });
   return (
     <div className="bg-white">
       <Navbar />

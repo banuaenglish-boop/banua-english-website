@@ -1,45 +1,18 @@
 "use client";
 
 import Image from "next/image";
-import { ArrowRight, Check } from "@phosphor-icons/react/dist/ssr";
+import { ArrowRight, Check, Quotes } from "@phosphor-icons/react/dist/ssr";
 import { useState, useEffect } from "react";
-
-const statsData = [
-  {
-    id: 1,
-    title: "50+",
-    subtitle: "Tutor Awardee & Tersertifikasi",
-  },
-  {
-    id: 2,
-    title: "10.000+",
-    subtitle: "Alumni Seluruh Indonesia",
-  },
-  {
-    id: 3,
-    title: "85%",
-    subtitle: "Lolos Beasiswa Impian",
-  },
-  {
-    id: 4,
-    title: "98%",
-    subtitle: "Mencapai Target Skor",
-  },
-];
-
-const dummySlides = [
-  "https://images.unsplash.com/photo-1741675121621-df90e3195f9d?crop=entropy&cs=srgb&fm=jpg&ixid=M3w5MDg0MzB8MHwxfHNlYXJjaHw2fHxhc2lhbiUyMG1hbGUlMjBzdHVkZW50JTIwd2VhcmluZyUyMHN1aXQlMjBwb3J0cmFpdHxlbnwwfHx8fDE3ODc2Mzc2MTd8MA&ixlib=rb-4.1.0&q=85",
-  "https://images.unsplash.com/photo-1645034647845-e0c4a794aac0?crop=entropy&cs=srgb&fm=jpg&ixid=M3w5MDg0MzB8MHwxfHNlYXJjaHw5fHxhc2lhbiUyMG1hbGUlMjBzdHVkZW50JTIwd2VhcmluZyUyMHN1aXQlMjBwb3J0cmFpdHxlbnwwfHx8fDE3ODc2Mzc2MTd8MA&ixlib=rb-4.1.0&q=85",
-  "https://images.unsplash.com/photo-1681070909604-f555aa006564?crop=entropy&cs=srgb&fm=jpg&ixid=M3w5MDg0MzB8MHwxfHNlYXJjaHw1fHxhc2lhbiUyMG1hbGUlMjBzdHVkZW50JTIwd2VhcmluZyUyMHN1aXQlMjBwb3J0cmFpdHxlbnwwfHx8fDE3ODc2Mzc2MTd8MA&ixlib=rb-4.1.0&q=85"
-];
+import { statsData } from "@/lib/content";
+import { heroTestimonials } from "@/lib/provided-content";
 
 export default function Hero() {
   const [currentSlide, setCurrentSlide] = useState(0);
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % dummySlides.length);
-    }, 4000);
+      setCurrentSlide((prev) => (prev + 1) % heroTestimonials.length);
+    }, 7000);
     return () => clearInterval(timer);
   }, []);
 
@@ -74,7 +47,7 @@ export default function Hero() {
                   <div className="flex-shrink-0 bg-[#FFD700] w-6 h-6 rounded-full flex items-center justify-center text-[#2C3E8A]">
                     <Check size={13} weight="bold" />
                   </div>
-                  <h3 className="font-poppins font-bold text-lg text-white leading-none tracking-tight">
+                  <h3 className="font-poppins font-bold text-sm lg:text-base text-white leading-snug tracking-tight">
                     {stat.title}
                   </h3>
                 </div>
@@ -87,24 +60,40 @@ export default function Hero() {
         </div>
 
         {/* Right Content - hidden on mobile, visible md+ */}
-        <div className="hidden md:flex animate-fade-up [animation-delay:200ms] flex-1 relative justify-end items-center md:pr-4">
-          <div className="relative w-full max-w-[240px] lg:max-w-[290px] aspect-[3/4]">
-            <div className="relative h-full w-full overflow-hidden rounded-[2rem] shadow-lg border-4 md:border-[6px] border-white/20">
-              {dummySlides.map((slide, index) => (
+        <div className="hidden md:flex animate-fade-up [animation-delay:200ms] flex-1 relative justify-end items-center md:pr-2">
+          <div className="relative w-full max-w-[350px] lg:max-w-[430px] xl:max-w-[480px] aspect-[1/1.1]">
+            <div className="relative h-full w-full">
+              {heroTestimonials.map((slide, index) => (
                 <div
-                  key={index}
-                  className="absolute inset-0 transition-transform duration-1000 ease-in-out"
+                  key={slide._id}
+                  aria-hidden={index !== currentSlide}
+                  className="absolute inset-0 transition-opacity duration-700 ease-in-out motion-reduce:transition-none"
                   style={{
-                    transform: `translateX(${(index - currentSlide) * 100}%)`,
+                    opacity: index === currentSlide ? 1 : 0,
+                    pointerEvents: index === currentSlide ? "auto" : "none",
                   }}
                 >
-                  <Image
-                    src={slide}
-                    alt={`Student Portrait ${index + 1}`}
-                    fill
-                    className="object-cover object-top"
-                    priority={index === 0}
-                  />
+                  <div className="absolute inset-y-0 left-0 right-8 overflow-hidden rounded-2xl border border-white/25 shadow-2xl">
+                    <Image
+                      src={slide.avatar}
+                      alt={`Foto ${slide.name}, peserta ${slide.programLabel}`}
+                      fill
+                      sizes="(min-width: 1280px) 448px, (min-width: 1024px) 398px, 318px"
+                      className="object-cover"
+                      style={{ objectPosition: slide.imagePosition, transform: `scale(${slide.imageScale})`, transformOrigin: "40% 55%" }}
+                      preload={index === 0}
+                    />
+                  </div>
+                  <div className="absolute -right-2 bottom-3 w-[62%] max-w-[280px] rounded-xl border border-white/70 bg-white/95 px-3.5 py-3 shadow-lg backdrop-blur-md lg:-right-3 lg:bottom-4">
+                    <div className="flex items-start gap-2">
+                      <Quotes size={16} weight="fill" className="mt-0.5 shrink-0 text-[#2C3E8A]/35" aria-hidden="true" />
+                      <blockquote className="font-inter text-xs font-medium leading-relaxed text-[#1a2557] lg:text-[13px]">{slide.quote}</blockquote>
+                    </div>
+                    <div className="mt-2.5 border-t border-[#2C3E8A]/10 pt-2">
+                      <p className="font-poppins text-xs font-bold leading-snug text-[#1a2557]">{slide.name}</p>
+                      <p className="mt-0.5 text-[10px] leading-snug text-gray-500">{slide.programLabel}</p>
+                    </div>
+                  </div>
                 </div>
               ))}
             </div>
@@ -112,11 +101,12 @@ export default function Hero() {
 
           {/* Slide indicators */}
           <div className="absolute -bottom-6 right-2 md:right-8 flex items-center gap-2">
-            {dummySlides.map((_, index) => (
+            {heroTestimonials.map((slide, index) => (
               <button
                 key={index}
                 onClick={() => setCurrentSlide(index)}
-                aria-label={`Go to slide ${index + 1}`}
+                aria-label={`Lihat testimoni ${slide.name}`}
+                aria-pressed={index === currentSlide}
                 className={`h-2 rounded-full transition-all duration-300 ${index === currentSlide
                   ? "w-6 bg-[#FFD700]"
                   : "w-2 bg-white/40 hover:bg-white/70"

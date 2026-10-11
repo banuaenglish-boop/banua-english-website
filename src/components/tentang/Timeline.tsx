@@ -1,10 +1,10 @@
 import SectionLabel from "@/components/ui/section-label";
 import { sanityFetch } from "@/sanity/lib/live";
 import { MILESTONES_QUERY } from "@/sanity/lib/queries";
+import type { Milestone } from "@/sanity/lib/types";
 
 export default async function Timeline() {
-  const { data: milestones } = await sanityFetch({ query: MILESTONES_QUERY });
-
+  const { data: milestones } = await sanityFetch<Milestone[]>({ query: MILESTONES_QUERY });
   return (
     /* 3. Bagaimana kami sampai di sini */
     <section className="relative overflow-hidden bg-linear-to-b from-white to-gray-50 section-y">
@@ -13,11 +13,11 @@ export default async function Timeline() {
         <div className="reveal mx-auto mb-14 max-w-xl text-center">
           <SectionLabel variant="light">Perjalanan Kami</SectionLabel>
           <h2 className="font-poppins heading-2 font-bold text-[#1a2557]">
-            Tumbuh Bersama <span className="text-[#2C3E8A]">Ribuan Alumni</span>
+            Perjalanan <span className="text-[#2C3E8A]">English Banua</span>
           </h2>
           <p className="mt-3 font-inter text-sm leading-relaxed text-gray-500">
-            Tujuh tahun, satu arah: dari satu kelas kecil di Banjarmasin sampai
-            alumni yang tersebar lintas negara.
+            Sejak 2016, dari les privat di rumah hingga menjadi PT. Banua
+            Education Center dengan fokus pada IELTS dan TOEFL.
           </p>
         </div>
 

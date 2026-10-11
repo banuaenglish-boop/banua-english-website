@@ -8,7 +8,8 @@ import {
   Clock,
   YoutubeLogo,
 } from "@phosphor-icons/react/dist/ssr";
-import { formatDateId } from "@/lib/utils";
+import { formatDateId, safeYoutubeUrl, todayISO } from "@/lib/utils";
+import { socialUrls } from "@/lib/site";
 import SectionLabel from "@/components/ui/section-label";
 import DateFilter, { type DateSort } from "@/components/ui/date-filter";
 import FilterDropdown from "@/components/ui/filter-dropdown";
@@ -29,9 +30,12 @@ const categoryFilters: { key: CategoryFilter; label: string }[] = [
 ];
 
 function VideoCard({ video }: { video: Video }) {
+  const href = safeYoutubeUrl(video.youtubeUrl);
+  if (!href) return null;
+
   return (
     <a
-      href={video.youtubeUrl}
+      href={href}
       target="_blank"
       rel="noopener noreferrer"
       className="group flex h-full flex-col overflow-hidden rounded-3xl border border-gray-100 bg-white shadow-md transition-all duration-500 hover:-translate-y-1.5 hover:shadow-lg"
@@ -76,17 +80,23 @@ function VideoCard({ video }: { video: Video }) {
             <CalendarBlank size={12} weight="bold" />
             {formatDateId(video.date)}
           </span>
-          <span className="flex items-center gap-1.5">
+          {video.views && <span className="flex items-center gap-1.5">
             <Eye size={12} weight="bold" />
             {video.views}
-          </span>
+          </span>}
         </div>
       </div>
     </a>
   );
 }
 
-export default function VideoGrid({ videos }: { videos: Video[] }) {
+export default function VideoGrid({
+  videos,
+  id,
+}: {
+  videos: Video[];
+  id?: string;
+}) {
   const [dateSort, setDateSort] = useState<DateSort>("terbaru");
   const [category, setCategory] = useState<CategoryFilter>("all");
 
@@ -97,7 +107,7 @@ export default function VideoGrid({ videos }: { videos: Video[] }) {
         ? videos
         : videos.filter((v) => v.category === category);
     if (dateSort === "upcoming") {
-      const today = new Date().toISOString().slice(0, 10);
+      const today = todayISO();
       return byCategory
         .filter((v) => v.date >= today)
         .sort((a, b) => a.date.localeCompare(b.date));
@@ -106,8 +116,10 @@ export default function VideoGrid({ videos }: { videos: Video[] }) {
   }, [dateSort, category, videos]);
 
   return (
-    <section className="bg-gray-50 py-16 md:py-24 relative overflow-hidden">
-
+    <section
+      id={id}
+      className="scroll-mt-20 bg-gray-50 py-16 md:py-24 relative overflow-hidden"
+    >
       <div className="container mx-auto px-6 md:px-10 relative z-10">
         {/* Header */}
         <div className="max-w-xl mx-auto text-center mb-8">
@@ -167,7 +179,7 @@ export default function VideoGrid({ videos }: { videos: Video[] }) {
             webinar, tutorial, dan tips belajar bahasa Inggris, semuanya gratis.
           </p>
           <a
-            href="https://youtube.com/@englishbanua"
+            href={socialUrls.youtube}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 rounded-full bg-[#2C3E8A] px-8 py-3.5 text-sm font-poppins font-bold text-white transition-all duration-300 hover:bg-[#1a2557] hover:shadow-xl hover:-translate-y-0.5"

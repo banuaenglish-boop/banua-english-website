@@ -7,11 +7,12 @@ import HomeWebinarRecording from "@/components/HomeWebinarRecording";
 import HomeTutorPreview from "@/components/HomeTutorPreview";
 import HomeCTABanner from "@/components/HomeCTABanner";
 import HomeTestimonials from "@/components/HomeTestimonials";
+import { JsonLd, breadcrumbJsonLd } from "@/components/JsonLd";
 import { sanityFetch } from "@/sanity/lib/live";
 import {
-  HOME_TESTIMONIALS_QUERY,
   HOME_VIDEOS_QUERY,
   HOME_WEBINARS_QUERY,
+  HOME_TESTIMONIALS_QUERY,
 } from "@/sanity/lib/queries";
 
 export default async function Home() {
@@ -24,6 +25,7 @@ export default async function Home() {
 
   return (
     <div className="bg-[#2C3E8A]">
+      <JsonLd data={breadcrumbJsonLd("/")} />
       <Navbar />
       <main className="relative min-h-screen overflow-x-hidden flex flex-col bg-[#2C3E8A]">
         {/* Hero Section with Video Background */}

@@ -32,15 +32,15 @@ export default function HomeTestimonials({
             Kata Mereka Tentang Kami
           </h2>
           <p className="text-white/60 text-sm">
-            Ribuan alumni telah membuktikan, English Banua bukan sekadar kursus, tapi investasi masa depan.
+            Cerita peserta tentang pengalaman belajar IELTS dan TOEFL bersama English Banua.
           </p>
         </motion.div>
       </div>
 
       <div className="flex justify-center gap-5 max-h-[clamp(360px,48vh,460px)] overflow-hidden px-6 [mask-image:linear-gradient(to_bottom,transparent,black_12%,black_88%,transparent)]">
         <TestimonialsColumn testimonials={firstColumn} duration={15} />
-        <TestimonialsColumn testimonials={secondColumn} className="hidden md:block" duration={19} />
-        <TestimonialsColumn testimonials={thirdColumn} className="hidden lg:block" duration={17} />
+        {secondColumn.length > 0 && <TestimonialsColumn testimonials={secondColumn} className="hidden md:block" duration={19} />}
+        {thirdColumn.length > 0 && <TestimonialsColumn testimonials={thirdColumn} className="hidden lg:block" duration={17} />}
       </div>
     </section>
   );

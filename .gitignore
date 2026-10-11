@@ -55,8 +55,25 @@ venv/
 .claude/
 .patchtrail/
 
+# local drafts / prompts / plans (not site source)
+*-prompt.md
+*-propmt.md
+*-plan.md
+card-stack-prompt.md
+testimonial-propmt.md
+pr-plan.md
+site-map-plan.md
+profil-*.md
+error.md
+
+# local security tooling (Claude hooks helpers)
+scan_injection.py
+setup_security.py
+security.md
+
 # editor
 .idea/
 .vscode/
 *.swp
 *.swo
+

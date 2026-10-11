@@ -7,12 +7,13 @@ import {
   GlobeHemisphereWest,
 } from "@phosphor-icons/react/dist/ssr";
 import SectionLabel from "@/components/ui/section-label";
+import { statsData } from "@/lib/content";
 
 const stats = [
-  { icon: <GraduationCap size={22} weight="bold" />, value: "10.000+", label: "Alumni seluruh Indonesia" },
-  { icon: <Users size={22} weight="bold" />, value: "50+", label: "Tutor Awardee & tersertifikasi" },
-  { icon: <GlobeHemisphereWest size={22} weight="bold" />, value: "15+", label: "Negara tujuan alumni" },
-  { icon: <GraduationCap size={22} weight="bold" />, value: "85%", label: "Lolos beasiswa impian" },
+  { icon: <GraduationCap size={22} weight="bold" />, ...statsData[0] },
+  { icon: <GlobeHemisphereWest size={22} weight="bold" />, ...statsData[1] },
+  { icon: <Users size={22} weight="bold" />, ...statsData[2] },
+  { icon: <GraduationCap size={22} weight="bold" />, ...statsData[3] },
 ];
 
 const values = [
@@ -77,17 +78,17 @@ export default function AboutHero() {
               <div className="grid max-w-sm grid-cols-2 gap-4">
                 {stats.map((stat) => (
                   <div
-                    key={stat.label}
+                    key={stat.id}
                     className="rounded-3xl border border-white/15 bg-white/10 p-6 text-center"
                   >
                     <span className="mb-3 inline-flex h-11 w-11 items-center justify-center rounded-xl bg-[#FFD700] text-[#1a2557]">
                       {stat.icon}
                     </span>
-                    <p className="mb-1 font-poppins text-3xl font-bold text-white">
-                      {stat.value}
+                    <p className="mb-1 font-poppins text-base leading-snug font-bold text-white">
+                      {stat.title}
                     </p>
                     <p className="text-[11px] font-medium text-white/60">
-                      {stat.label}
+                      {stat.subtitle}
                     </p>
                   </div>
                 ))}

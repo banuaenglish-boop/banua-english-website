@@ -1,27 +1,5 @@
 import { Check } from "@phosphor-icons/react/dist/ssr";
-
-const statsData = [
-  {
-    id: 1,
-    title: "50+",
-    subtitle: "Tutor Awardee & Tersertifikasi",
-  },
-  {
-    id: 2,
-    title: "10.000+",
-    subtitle: "Alumni Seluruh Indonesia",
-  },
-  {
-    id: 3,
-    title: "85%",
-    subtitle: "Lolos Beasiswa Impian",
-  },
-  {
-    id: 4,
-    title: "98%",
-    subtitle: "Mencapai Target Skor",
-  },
-];
+import { statsData } from "@/lib/content";
 
 export default function Stats() {
   return (

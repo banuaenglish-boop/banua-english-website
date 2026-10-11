@@ -8,29 +8,6 @@ import {
   Target,
 } from "@phosphor-icons/react/dist/ssr";
 
-const stats = [
-  {
-    value: "+1",
-    label: "Rata-rata Kenaikan Band",
-    subtext: "Peningkatan skor IELTS/TOEFL",
-  },
-  {
-    value: "700+",
-    label: "Alumni Lolos Beasiswa",
-    subtext: "LPDP, AAS, MEXT, Chevening & lainnya",
-  },
-  {
-    value: "98%",
-    label: "Capai Target Band",
-    subtext: "Tingkat keberhasilan siswa",
-  },
-  {
-    value: "35K+",
-    label: "Total Alumni",
-    subtext: "Tersebar di berbagai kampus dunia",
-  },
-];
-
 const values = [
   {
     icon: <Compass size={22} weight="bold" />,
@@ -48,7 +25,7 @@ const values = [
     icon: <SealCheck size={22} weight="bold" />,
     title: "Tahu Apa yang Berhasil",
     description:
-      "Dengan pengalaman bertahun-tahun membimbing ribuan alumni, kami menghadirkan metode yang sudah terbukti, bukan coba-coba.",
+      "Berawal dari les privat pada 2016, English Banua kini fokus pada bimbingan IELTS dan TOEFL.",
   },
   {
     icon: <HandHeart size={22} weight="bold" />,
@@ -73,8 +50,8 @@ export default function HomeAboutSection() {
             </h2>
             <p className="mt-3 font-inter text-sm leading-relaxed text-gray-500">
               Sejak awal kami percaya satu hal: setiap orang berhak punya
-              kesempatan kuliah di luar negeri. Ribuan alumni sudah
-              membuktikannya bersama kami.
+              kesempatan belajar dan mempersiapkan studi. English Banua
+              mendampingi perjalanan itu melalui bimbingan bahasa Inggris.
             </p>
           </div>
 
@@ -89,26 +66,6 @@ export default function HomeAboutSection() {
               className="transition-transform duration-300 group-hover:translate-x-1"
             />
           </Link>
-        </div>
-
-        {/* Stat strip */}
-        <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
-          {stats.map((stat) => (
-            <div
-              key={stat.label}
-              className="rounded-2xl border border-gray-100 bg-gray-50 p-4 transition-colors duration-300 hover:border-blue-200 hover:bg-blue-50/50"
-            >
-              <span className="font-outfit stat-value font-black tracking-tight text-[#2C3E8A]">
-                {stat.value}
-              </span>
-              <h3 className="mt-3 font-poppins text-sm font-bold leading-snug text-[#1a2557]">
-                {stat.label}
-              </h3>
-              <p className="mt-1 font-inter text-[11px] leading-relaxed text-gray-400">
-                {stat.subtext}
-              </p>
-            </div>
-          ))}
         </div>
 
         {/* Value cards */}

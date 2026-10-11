@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { ArrowRight } from "@phosphor-icons/react/dist/ssr";
 import { cn } from "@/lib/utils";
+import { programRegistrationUrl } from "@/lib/site";
 import SectionLabel from "@/components/ui/section-label";
 import { programIcons } from "@/components/program/program-icons";
 import type { Program, ProgramMode } from "@/sanity/lib/types";
@@ -30,7 +31,6 @@ const modeConfig: Record<ProgramMode, { label: string; bg: string; text: string;
 
 const filterTabs: { key: ProgramMode | "all"; label: string }[] = [
   { key: "all", label: "Semua Program" },
-  { key: "private", label: "Private 1-on-1" },
   { key: "offline", label: "Kelas Offline" },
   { key: "online", label: "Kelas Online" },
 ];
@@ -98,7 +98,9 @@ function ProgramCard({ program }: { program: Program }) {
         </div>
 
         <a
-          href="/kontak"
+          href={programRegistrationUrl(program.title)}
+          target="_blank"
+          rel="noopener noreferrer"
           className="flex w-full items-center justify-between rounded-xl bg-[#2C3E8A] px-4 py-3 text-xs font-bold text-white transition-all duration-300 hover:bg-[#1a2557] group/btn"
         >
           <span>{program.ctaLabel ?? "Lihat Detail"}</span>

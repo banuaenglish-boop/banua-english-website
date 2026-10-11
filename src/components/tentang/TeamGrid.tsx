@@ -32,9 +32,8 @@ export default function TeamGrid({ team }: { team: TeamMember[] }) {
               <span className="text-[#2C3E8A]">English Banua</span>
             </h2>
             <p className="text-gray-500 text-sm font-inter leading-relaxed">
-              Perjalanan itu digerakkan orang. Founder, tutor, dan volunteer,
-              semuanya berdedikasi membawa siswa Indonesia ke jenjang pendidikan
-              yang lebih tinggi.
+              Kenali tim tutor offline dan online English Banua beserta latar
+              belakang pendidikan dan pengalaman mereka.
             </p>
           </div>
 

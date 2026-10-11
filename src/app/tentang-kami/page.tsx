@@ -7,6 +7,7 @@ import TeamGrid from "@/components/tentang/TeamGrid";
 import Partnerships from "@/components/tentang/Partnerships";
 import { sanityFetch } from "@/sanity/lib/live";
 import { TEAM_QUERY } from "@/sanity/lib/queries";
+import type { TeamMember } from "@/sanity/lib/types";
 
 export const metadata: Metadata = {
   title: "Tentang Kami | PT. Banua Education Center",
@@ -15,8 +16,7 @@ export const metadata: Metadata = {
 };
 
 export default async function TentangKamiPage() {
-  const { data: team } = await sanityFetch({ query: TEAM_QUERY });
-
+  const { data: team } = await sanityFetch<TeamMember[]>({ query: TEAM_QUERY });
   return (
     <div className="bg-white">
       <Navbar />

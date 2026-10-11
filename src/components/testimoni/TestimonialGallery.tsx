@@ -24,19 +24,19 @@ function TestimonialCard({ item }: { item: Testimonial }) {
         <span className="rounded-full border border-blue-200 bg-blue-50 px-3 py-1 text-[11px] font-bold text-[#2C3E8A]">
           {item.programLabel}
         </span>
-        <span className="flex items-center gap-1 rounded-full border border-amber-200 bg-amber-50 px-2.5 py-1 text-[11px] font-bold text-amber-700">
+        {item.score && <span className="flex items-center gap-1 rounded-full border border-amber-200 bg-amber-50 px-2.5 py-1 text-[11px] font-bold text-amber-700">
           <Medal size={12} weight="bold" />
           {item.score}
-        </span>
+        </span>}
       </div>
 
       {/* Quote */}
-      <p className="text-sm text-gray-600 font-inter leading-relaxed line-clamp-5 mb-5 flex-1">
+      <p className="text-sm text-gray-600 font-inter leading-relaxed mb-5 flex-1">
         &quot;{item.text}&quot;
       </p>
 
       {/* Achievement */}
-      <div className="mb-5 rounded-xl bg-gray-50 border border-gray-100 px-4 py-3">
+      {item.achievement && <div className="mb-5 rounded-xl bg-gray-50 border border-gray-100 px-4 py-3">
         <p className="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-1">
           Pencapaian
         </p>
@@ -44,24 +44,24 @@ function TestimonialCard({ item }: { item: Testimonial }) {
           <Star size={12} weight="fill" className="text-[#FFD700] shrink-0" />
           {item.achievement}
         </p>
-      </div>
+      </div>}
+      {item.tutor && <p className="mb-4 text-xs text-gray-500">Tutor: {item.tutor}</p>}
 
       {/* Author */}
       <div className="flex items-center gap-3 border-t border-gray-100 pt-4">
         <div className="h-11 w-11 shrink-0 overflow-hidden rounded-full border-2 border-blue-100">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
+          {item.avatar ? <img
             src={item.avatar}
             alt={item.name}
             loading="lazy"
             className="h-full w-full object-cover"
-          />
+          /> : <span className="flex h-full w-full items-center justify-center bg-blue-50 text-sm font-bold text-[#2C3E8A]" aria-hidden="true">{item.name.split(" ").slice(0, 2).map((part) => part[0]).join("")}</span>}
         </div>
         <div className="min-w-0">
-          <p className="text-sm font-semibold text-[#1a2557] truncate">
+          <p className="text-sm font-semibold text-[#1a2557]">
             {item.name}
           </p>
-          <p className="text-[11px] text-gray-400 truncate">{item.university}</p>
+          <p className="text-[11px] text-gray-400">{[item.status, item.university].filter(Boolean).join(" · ")}</p>
         </div>
       </div>
     </article>
@@ -78,7 +78,7 @@ export default function TestimonialGallery({
   const filtered =
     activeFilter === "all"
       ? testimonials
-      : testimonials.filter((t) => t.program === activeFilter);
+      : testimonials.filter((t) => t.program === activeFilter || (activeFilter === "private" && t.programLabel.startsWith("Private")) || (activeFilter === "scholarship" && t.achievement.includes("Beasiswa")));
 
   return (
     <section className="bg-gray-50 py-16 md:py-24 relative overflow-hidden">

@@ -3,7 +3,8 @@
 import { useMemo, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { formatDateId } from "@/lib/utils";
+import { formatDateId, safeHref, todayISO } from "@/lib/utils";
+import { siteConfig } from "@/lib/site";
 import SectionLabel from "@/components/ui/section-label";
 import DateFilter, { type DateSort } from "@/components/ui/date-filter";
 import FilterDropdown from "@/components/ui/filter-dropdown";
@@ -32,7 +33,7 @@ export default function WebinarList({ webinars }: { webinars: Webinar[] }) {
 
     // ISO dates sort correctly as plain strings.
     if (dateSort === "upcoming") {
-      const today = new Date().toISOString().slice(0, 10);
+      const today = todayISO();
       return byCountry
         .filter((w) => w.date >= today)
         .sort((a, b) => a.date.localeCompare(b.date));
@@ -77,24 +78,43 @@ export default function WebinarList({ webinars }: { webinars: Webinar[] }) {
         {/* Grid */}
         {filteredWebinars.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredWebinars.map((webinar) => (
-              <Link
-                key={webinar._id}
-                href={webinar.registrationUrl ?? "/kontak"}
-                className="group relative block aspect-[3/4] overflow-hidden rounded-3xl shadow-md transition-all duration-500 hover:-translate-y-1.5 hover:shadow-xl focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#2C3E8A]"
-              >
-                <Image
-                  src={webinar.poster}
-                  alt={`Poster webinar ${webinar.title}`}
-                  fill
-                  sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-                  className="object-cover transition-transform duration-700 group-hover:scale-105"
-                />
-                <span className="absolute left-3 top-3 rounded-full bg-white/90 px-3 py-1 text-[10px] font-bold text-[#2C3E8A]">
-                  {formatDateId(webinar.date)}
-                </span>
-              </Link>
-            ))}
+            {filteredWebinars.map((webinar) => {
+              const href = safeHref(webinar.registrationUrl) ?? siteConfig.waMe;
+              const className =
+                "group relative block aspect-[3/4] overflow-hidden rounded-3xl shadow-md transition-all duration-500 hover:-translate-y-1.5 hover:shadow-xl focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#2C3E8A]";
+              const body = (
+                <>
+                  <Image
+                    src={webinar.poster}
+                    alt={`Poster webinar ${webinar.title}`}
+                    fill
+                    sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                    className="object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
+                  <span className="absolute left-3 top-3 rounded-full bg-white/90 px-3 py-1 text-[10px] font-bold text-[#2C3E8A]">
+                    {formatDateId(webinar.date)}
+                  </span>
+                </>
+              );
+              if (href.startsWith("/")) {
+                return (
+                  <Link key={webinar._id} href={href} className={className}>
+                    {body}
+                  </Link>
+                );
+              }
+              return (
+                <a
+                  key={webinar._id}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={className}
+                >
+                  {body}
+                </a>
+              );
+            })}
           </div>
         ) : (
           <div className="text-center py-16 rounded-3xl border border-dashed border-gray-200 bg-white/50">
