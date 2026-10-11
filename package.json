@@ -4,7 +4,9 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "next build && opennextjs-cloudflare build --skipNextBuild",
+    "deploy": "npm run build && opennextjs-cloudflare deploy",
+    "preview": "npm run build && opennextjs-cloudflare preview",
     "start": "next start",
     "lint": "eslint",
     "studio:dev": "sanity dev",
@@ -12,11 +14,12 @@
     "sanity:seed": "node --use-system-ca scripts/sanity-seed.mjs"
   },
   "dependencies": {
+    "@opennextjs/cloudflare": "1.20.10",
     "@phosphor-icons/react": "^2.1.10",
     "clsx": "^2.1.1",
     "framer-motion": "^13.1.1",
     "lucide-react": "^1.39.0",
-    "next": "16.3.2",
+    "next": "16.3.8",
     "next-sanity": "13.3.4",
     "react": "19.2.8",
     "react-dom": "19.2.8",
@@ -28,9 +31,10 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
-    "eslint-config-next": "16.3.2",
+    "eslint-config-next": "16.3.8",
     "sanity": "6.12.0",
     "tailwindcss": "^4",
-    "typescript": "^5"
+    "typescript": "^5",
+    "wrangler": "4.149.0"
   }
 }
