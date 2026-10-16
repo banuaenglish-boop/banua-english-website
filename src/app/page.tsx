@@ -8,12 +8,20 @@ import HomeTutorPreview from "@/components/HomeTutorPreview";
 import HomeCTABanner from "@/components/HomeCTABanner";
 import HomeTestimonials from "@/components/HomeTestimonials";
 import { JsonLd, breadcrumbJsonLd } from "@/components/JsonLd";
+import { pageMetadata } from "@/lib/seo";
+import { siteConfig } from "@/lib/site";
 import { sanityFetch } from "@/sanity/lib/live";
 import {
   HOME_VIDEOS_QUERY,
   HOME_WEBINARS_QUERY,
   HOME_TESTIMONIALS_QUERY,
 } from "@/sanity/lib/queries";
+
+export const metadata = pageMetadata({
+  path: "/",
+  title: "Kursus IELTS & TOEFL Banjarmasin",
+  description: siteConfig.description,
+});
 
 export default async function Home() {
   const [{ data: webinars }, { data: recordings }, { data: testimonials }] =

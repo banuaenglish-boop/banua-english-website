@@ -7,7 +7,7 @@ export function JsonLd({ data }: JsonLdProps) {
   return (
     <script
       type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(data).replace(/</g, "\\u003c") }}
     />
   );
 }
@@ -68,13 +68,14 @@ export default function SiteJsonLd() {
 }
 
 export function breadcrumbJsonLd(path: string) {
-  const items =
-    path === "/"
-      ? [{ path: "/", name: breadcrumbLabels["/"] }]
-      : [
-          { path: "/", name: breadcrumbLabels["/"] },
-          { path, name: breadcrumbLabels[path] ?? path },
-        ];
+  const segments = path.split("/").filter(Boolean);
+  const items = [
+    { path: "/", name: breadcrumbLabels["/"] },
+    ...segments.map((segment, index) => {
+      const itemPath = `/${segments.slice(0, index + 1).join("/")}`;
+      return { path: itemPath, name: breadcrumbLabels[itemPath] ?? segment };
+    }),
+  ];
 
   return {
     "@context": "https://schema.org",

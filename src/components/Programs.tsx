@@ -3,6 +3,7 @@ import SectionLabel from "@/components/ui/section-label";
 import { sanityFetch } from "@/sanity/lib/live";
 import { HOME_PROGRAMS_QUERY } from "@/sanity/lib/queries";
 import ProgramSlider from "@/components/ProgramSlider";
+import CourseLinks from "@/components/program/CourseLinks";
 
 export default async function Programs() {
   const { data: programs } = await sanityFetch({ query: HOME_PROGRAMS_QUERY });
@@ -15,13 +16,14 @@ export default async function Programs() {
           <div className="max-w-xl">
             <SectionLabel variant="light">Program &amp; Event</SectionLabel>
             <h2 className="font-poppins font-bold heading-2 text-[#1a2557]">
-              Satu Tempat untuk Semua
+              Pilihan Kursus Bahasa Inggris
               <br />
-              <span className="text-[#2C3E8A]">Persiapan Studi Abroadmu</span>
+              <span className="text-[#2C3E8A]">di Banjarmasin dan Online</span>
             </h2>
             <p className="mt-3 text-gray-500 text-sm font-inter leading-relaxed">
-              Dari persiapan IELTS, TOEFL, hingga strategi beasiswa, semua tersedia
-              dalam satu ekosistem bimbingan yang dipimpin Awardee.
+              Kenali persiapan IELTS dan TOEFL, pilihan les privat, serta tim
+              tutor kami. Diskusikan kebutuhan belajar dan jadwalmu sebelum
+              memilih program.
             </p>
           </div>
 
@@ -39,6 +41,7 @@ export default async function Programs() {
         </div>
 
         {/* Horizontal Program Slider */}
+        <CourseLinks />
         <ProgramSlider programs={programs} />
       </div>
     </section>

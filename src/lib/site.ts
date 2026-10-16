@@ -8,7 +8,7 @@ export const siteConfig = {
   ),
   locale: "id_ID",
   description:
-    "Persiapan IELTS, TOEFL, dan studi ke luar negeri bersama tutor Awardee S1 & S2. Kelas online dan offline di Banjarmasin, Kalimantan Selatan.",
+    "Kursus IELTS dan TOEFL di Banjarmasin serta kelas privat online. Kenali tutor, pilihan belajar, dan pengalaman peserta English Banua sebelum mendaftar.",
   email: "hello@englishbanua.com",
   phoneDisplay: "+62 821-1515-1221",
   phoneE164: "+6282115151221",
@@ -26,6 +26,8 @@ export const siteConfig = {
 export const siteRoutes = [
   { path: "/", priority: 1, changeFrequency: "weekly" as const },
   { path: "/program", priority: 0.9, changeFrequency: "weekly" as const },
+  { path: "/program/ielts-banjarmasin", priority: 0.9, changeFrequency: "monthly" as const },
+  { path: "/program/toefl-banjarmasin", priority: 0.9, changeFrequency: "monthly" as const },
   { path: "/webinar", priority: 0.8, changeFrequency: "weekly" as const },
   { path: "/testimoni", priority: 0.7, changeFrequency: "monthly" as const },
   { path: "/cerita-banua", priority: 0.7, changeFrequency: "weekly" as const },
@@ -35,6 +37,8 @@ export const siteRoutes = [
 export const breadcrumbLabels: Record<string, string> = {
   "/": "Beranda",
   "/program": "Kelas & Program",
+  "/program/ielts-banjarmasin": "Kursus IELTS Banjarmasin",
+  "/program/toefl-banjarmasin": "Kursus TOEFL Banjarmasin",
   "/webinar": "Webinar",
   "/testimoni": "Testimoni",
   "/cerita-banua": "Cerita Banua",

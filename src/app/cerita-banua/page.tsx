@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import StoryGrid from "@/components/StoryGrid";
@@ -7,16 +7,11 @@ import { sanityFetch } from "@/sanity/lib/live";
 import { STORIES_QUERY } from "@/sanity/lib/queries";
 import type { BanuaStory } from "@/sanity/lib/types";
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
+  path: "/cerita-banua",
   title: "Cerita Banua",
   description: "Potret kegiatan belajar, kunjungan, dan keseharian di English Banua dalam foto dan cerita singkat.",
-  alternates: { canonical: "/cerita-banua" },
-  openGraph: {
-    title: "Cerita Banua | English Banua",
-    description: "Potret kecil dari ruang belajar dan kebersamaan di English Banua.",
-    url: "/cerita-banua",
-  },
-};
+});
 
 export default async function CeritaBanuaPage() {
   const { data: stories } = await sanityFetch<BanuaStory[]>({

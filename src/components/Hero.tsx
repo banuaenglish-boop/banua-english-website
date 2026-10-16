@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { ArrowRight, Check, Quotes } from "@phosphor-icons/react/dist/ssr";
 import { useState, useEffect } from "react";
 import { statsData } from "@/lib/content";
@@ -23,20 +24,20 @@ export default function Hero() {
         <div className="flex-1 text-white max-w-2xl flex flex-col justify-center">
           {/* Eyebrow label */}
           <h1 className="animate-fade-up [animation-delay:120ms] text-[clamp(1.6rem,4vw,2.6rem)] font-poppins font-bold leading-[1.12] tracking-tight text-balance mb-3 text-white">
-            Persiapan IELTS &amp; TOEFL Terbaik Bersama Tutor Awardee
+            Kursus IELTS &amp; TOEFL di Banjarmasin dan Online
           </h1>
           <p className="animate-fade-up [animation-delay:240ms] text-sm md:text-base text-white/80 mb-4 max-w-xl font-inter leading-relaxed">
-            <span className="font-semibold text-white">English Banua</span> siap bantu raih skor targetmu lewat Private 1-on-1 &amp; Kelas Intensif, dibimbing langsung oleh Awardee S1/S2 dalam dan luar negeri.
+            <span className="font-semibold text-white">English Banua</span> mendampingi persiapan studi dan beasiswamu lewat les privat bahasa Inggris, IELTS, dan TOEFL. Kenali tutor lulusan dalam dan luar negeri, termasuk awardee LPDP, lalu pilih cara belajar yang sesuai kebutuhanmu.
           </p>
           <div className="animate-fade-up [animation-delay:360ms] mb-4">
-            <button className="group flex items-center gap-2 md:gap-3 bg-white pl-2 pr-5 md:pr-6 py-1.5 rounded-full hover:-translate-y-0.5 transition-all duration-300 shadow-lg w-max">
+            <Link href="/program" className="group flex items-center gap-2 md:gap-3 bg-white pl-2 pr-5 md:pr-6 py-1.5 rounded-full hover:-translate-y-0.5 transition-all duration-300 shadow-lg w-max">
               <div className="bg-[#2C3E8A] text-white p-2.5 rounded-full transition-transform duration-300 group-hover:-rotate-45">
                 <ArrowRight size={17} weight="bold" />
               </div>
               <span className="text-xs md:text-sm font-poppins font-semibold text-[#2C3E8A]">
-                Start Your Journey
+                Pilih Program Belajar
               </span>
-            </button>
+            </Link>
           </div>
 
           {/* Stats integrated in the Hero */}

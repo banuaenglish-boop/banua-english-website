@@ -110,18 +110,18 @@ export default function Footer() {
             </h3>
             <ul className="flex flex-col gap-3">
               {[
-                "Private 1-on-1",
-                "IELTS Preparation",
-                "TOEFL Preparation",
-                "IELTS for Scholarship",
-                "Online Scoring",
+                { label: "Kursus IELTS Banjarmasin", href: "/program/ielts-banjarmasin" },
+                { label: "Kursus TOEFL Banjarmasin", href: "/program/toefl-banjarmasin" },
+                { label: "Private 1-on-1", href: "/program" },
+                { label: "Materi & Kelas IELTS", href: "/program/ielts-banjarmasin#materi" },
+                { label: "Materi & Kelas TOEFL", href: "/program/toefl-banjarmasin#materi" },
               ].map((program) => (
-                <li key={program}>
+                <li key={program.label}>
                   <Link
-                    href="/program"
+                    href={program.href}
                     className="text-sm text-white/60 font-inter transition-colors duration-300 hover:text-white"
                   >
-                    {program}
+                    {program.label}
                   </Link>
                 </li>
               ))}

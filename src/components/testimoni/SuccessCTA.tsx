@@ -1,11 +1,13 @@
 import { ArrowRight } from "@phosphor-icons/react/dist/ssr";
 import { siteConfig } from "@/lib/site";
 import { ctaStats } from "@/lib/content";
+import CourseLinks from "@/components/program/CourseLinks";
 
 export default function SuccessCTA() {
   return (
     <section className="bg-white py-16 md:py-24">
       <div className="container mx-auto px-6 md:px-10">
+        <CourseLinks />
         <div className="relative overflow-hidden rounded-3xl bg-[#2C3E8A] p-8 md:p-16">
 
           <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-10">

@@ -1,11 +1,14 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { ArrowRight } from "@phosphor-icons/react/dist/ssr";
 import { cn } from "@/lib/utils";
 import { programRegistrationUrl } from "@/lib/site";
 import SectionLabel from "@/components/ui/section-label";
 import { programIcons } from "@/components/program/program-icons";
+import CourseLinks from "@/components/program/CourseLinks";
+import { programDetailPath } from "@/lib/course-routes";
 import type { Program, ProgramMode } from "@/sanity/lib/types";
 
 const modeConfig: Record<ProgramMode, { label: string; bg: string; text: string; border: string }> = {
@@ -37,6 +40,7 @@ const filterTabs: { key: ProgramMode | "all"; label: string }[] = [
 
 function ProgramCard({ program }: { program: Program }) {
   const mode = modeConfig[program.mode];
+  const detailPath = programDetailPath(program.title);
 
   return (
     <article className="group relative flex h-full flex-col overflow-hidden rounded-3xl border border-gray-100 bg-white shadow-md transition-all duration-500 hover:-translate-y-1.5 hover:shadow-lg">
@@ -83,6 +87,12 @@ function ProgramCard({ program }: { program: Program }) {
         <p className="min-h-[66px] text-xs leading-relaxed text-gray-500 line-clamp-4 font-inter">
           {program.description}
         </p>
+
+        {detailPath && (
+          <Link href={detailPath} className="text-sm font-semibold text-[#2C3E8A] underline underline-offset-4">
+            Lihat detail persiapan {/\bIELTS\b/i.test(program.title) ? "IELTS" : "TOEFL"}
+          </Link>
+        )}
 
         <div className="mt-auto border-t border-gray-100 pt-4">
           <div className="grid grid-cols-2 gap-x-3 gap-y-2">
@@ -133,13 +143,13 @@ export default function ProgramExplorer({ programs }: { programs: Program[] }) {
           <div className="max-w-2xl animate-fade-up">
             <SectionLabel variant="dark">Program &amp; Kelas</SectionLabel>
             <h1 className="font-poppins font-bold text-3xl md:text-5xl text-white leading-tight mb-4">
-              Temukan Program yang{" "}
-              <span className="text-[#FFD700]">Tepat</span> untuk Targetmu
+              Program IELTS, TOEFL, dan{" "}
+              <span className="text-[#FFD700]">Kelas Privat</span>
             </h1>
             <p className="text-white/70 text-sm md:text-base font-inter leading-relaxed">
-              Dari Private 1-on-1 hingga kelas reguler intensif, semua dibimbing
-              oleh tutor Awardee S1 &amp; S2 dari dalam dan luar negeri. Pilih
-              mode belajar yang sesuai dengan jadwal dan gaya belajarmu.
+              Temukan pilihan kursus di Banjarmasin dan kelas online bersama
+              English Banua. Pelajari materi IELTS dan TOEFL, kenali tutor,
+              lalu konsultasikan format belajar yang sesuai dengan targetmu.
             </p>
           </div>
         </div>
@@ -149,6 +159,7 @@ export default function ProgramExplorer({ programs }: { programs: Program[] }) {
       <section className="bg-gray-50 py-16 md:py-24 relative">
 
         <div className="container mx-auto px-6 md:px-10 relative z-10">
+          <CourseLinks />
           {/* Filter tabs */}
           <div className="flex flex-wrap items-center gap-2.5 mb-10 justify-center">
             {filterTabs.map((tab) => (

@@ -26,37 +26,24 @@ const outfit = Outfit({
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
-    default: `${siteConfig.name} | Kursus Bahasa Inggris, TOEFL & IELTS Banjarmasin`,
+    default: `Kursus IELTS & TOEFL Banjarmasin | ${siteConfig.name}`,
     template: `%s | ${siteConfig.name}`,
   },
   description: siteConfig.description,
   applicationName: siteConfig.name,
   authors: [{ name: siteConfig.legalName }],
   creator: siteConfig.legalName,
-  keywords: [
-    "kursus IELTS Banjarmasin",
-    "kursus TOEFL Banjarmasin",
-    "kursus bahasa Inggris Banjarmasin",
-    "IELTS preparation",
-    "TOEFL preparation",
-    "English Banua",
-    "beasiswa LPDP",
-    "les bahasa Inggris Kalimantan Selatan",
-  ],
-  alternates: {
-    canonical: "/",
-  },
   openGraph: {
     type: "website",
     locale: siteConfig.locale,
     url: siteConfig.url,
     siteName: siteConfig.name,
-    title: `${siteConfig.name} | Kursus Bahasa Inggris, TOEFL & IELTS Banjarmasin`,
+    title: `Kursus IELTS & TOEFL Banjarmasin | ${siteConfig.name}`,
     description: siteConfig.description,
   },
   twitter: {
     card: "summary_large_image",
-    title: `${siteConfig.name} | Kursus IELTS & TOEFL Banjarmasin`,
+    title: `Kursus IELTS & TOEFL Banjarmasin | ${siteConfig.name}`,
     description: siteConfig.description,
   },
   robots: {

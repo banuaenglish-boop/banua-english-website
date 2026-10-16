@@ -1,14 +1,17 @@
 "use client";
 
 import { useRef } from "react";
+import Link from "next/link";
 import { CaretLeft, CaretRight, ArrowRight } from "@phosphor-icons/react";
 import type { Program } from "@/sanity/lib/types";
 import { programIcons } from "@/components/program/program-icons";
 import { badgeColorClass } from "@/lib/utils";
 import { programRegistrationUrl } from "@/lib/site";
 import { modeConfig } from "@/lib/content";
+import { programDetailPath } from "@/lib/course-routes";
 
 function ProgramCard({ program }: { program: Program }) {
+  const detailPath = programDetailPath(program.title);
   const mode = modeConfig[program.mode] || {
     label: program.mode,
     bg: "bg-blue-50",
@@ -67,6 +70,12 @@ function ProgramCard({ program }: { program: Program }) {
         <p className="text-xs leading-relaxed text-gray-500 line-clamp-3 font-inter">
           {program.description}
         </p>
+
+        {detailPath && (
+          <Link href={detailPath} className="text-sm font-semibold text-[#2C3E8A] underline underline-offset-4">
+            Lihat detail persiapan {/\bIELTS\b/i.test(program.title) ? "IELTS" : "TOEFL"}
+          </Link>
+        )}
 
         <div className="mt-auto border-t border-gray-100 pt-3.5">
           <div className="grid grid-cols-2 gap-x-3 gap-y-2">

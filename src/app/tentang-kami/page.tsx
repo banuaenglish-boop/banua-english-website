@@ -1,4 +1,5 @@
-import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
+import { JsonLd, breadcrumbJsonLd } from "@/components/JsonLd";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import AboutHero from "@/components/tentang/AboutHero";
@@ -9,16 +10,18 @@ import { sanityFetch } from "@/sanity/lib/live";
 import { TEAM_QUERY } from "@/sanity/lib/queries";
 import type { TeamMember } from "@/sanity/lib/types";
 
-export const metadata: Metadata = {
-  title: "Tentang Kami | PT. Banua Education Center",
+export const metadata = pageMetadata({
+  path: "/tentang-kami",
+  title: "Tentang Kami & Tim Tutor di Banjarmasin",
   description:
-    "English Banua adalah lembaga kursus bahasa Inggris, TOEFL, dan IELTS di Banjarmasin yang dibimbing tutor Awardee S1 & S2 dari dalam dan luar negeri.",
-};
+    "Kenali English Banua, PT. Banua Education Center di Banjarmasin. Simak perjalanan sejak 2016, profil tutor, serta bimbingan IELTS dan TOEFL kami.",
+});
 
 export default async function TentangKamiPage() {
   const { data: team } = await sanityFetch<TeamMember[]>({ query: TEAM_QUERY });
   return (
     <div className="bg-white">
+      <JsonLd data={breadcrumbJsonLd("/tentang-kami")} />
       <Navbar />
       <main>
         <AboutHero />
