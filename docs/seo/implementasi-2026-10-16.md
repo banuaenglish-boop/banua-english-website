@@ -9,12 +9,12 @@ Tanggal: 16 Oktober 2026. Skill: seo-keyword-strategist.
 - Dua halaman layanan ditambahkan: `/program/ielts-banjarmasin` dan `/program/toefl-banjarmasin`.
 - H1 dan pengantar beranda/program diperjelas untuk kebutuhan kursus IELTS, TOEFL, dan bahasa Inggris di Banjarmasin serta kelas online.
 - Halaman layanan memuat tujuan peserta, materi, pilihan belajar, konsultasi biaya/jadwal, tutor dari CMS, testimoni sesuai program, dan FAQ.
-- Tautan internal dari beranda, kartu program, footer, dan halaman testimoni mengarah ke halaman layanan yang relevan. Program yang memuat IELTS dan TOEFL sekaligus tidak dipetakan secara sembarang ke salah satu halaman.
+- Tautan internal dari footer dan halaman testimoni mengarah ke halaman layanan yang relevan. Sesuai revisi pemilik, tautan tambahan di kartu program dan blok panduan di section program beranda/halaman kelas dihapus; kedua halaman layanan dan sitemap tetap tersedia.
 - Kedua URL masuk sitemap. Breadcrumb memiliki urutan Beranda → Program → halaman layanan, ditampilkan sebagai navigasi dan JSON-LD.
 - Structured data Service dan FAQ mengikuti isi yang tampil. Tidak ada angka harga, rating, ketersediaan kursi, atau jaminan hasil yang ditambahkan ke schema.
 - Serialisasi JSON-LD mengamankan karakter `<` agar teks dari CMS tidak menutup elemen script.
 - Tombol utama beranda sekarang membuka daftar program.
-- Data rute yang dipakai komponen interaktif dipisahkan dari naskah panjang halaman agar teks layanan tidak ikut masuk ke bundle client hanya untuk menentukan tautan.
+- Data tautan layanan dipisahkan dari naskah panjang halaman dan dipakai oleh navigasi panduan pada halaman testimoni.
 
 ## Pemetaan keyword
 
@@ -78,7 +78,7 @@ Entitas utama: English Banua, PT. Banua Education Center, Banjarmasin, Kalimanta
 
 ## Validasi
 
-Jalankan `npm run check:seo` untuk memeriksa metadata delapan rute, hubungan sitemap dengan halaman, hierarki breadcrumb, satu H1 per halaman layanan, kesesuaian FAQ dengan JSON-LD, tautan internal, pemetaan program campuran, serta pengamanan JSON-LD. Script juga mencetak metrik keyword.
+Jalankan `npm run check:seo` untuk memeriksa metadata delapan rute, hubungan sitemap dengan halaman, hierarki breadcrumb, satu H1 per halaman layanan, kesesuaian FAQ dengan JSON-LD, tautan internal, serta pengamanan JSON-LD. Script juga mencetak metrik keyword.
 
 Pemeriksaan ini memakai modul SEO dan render React yang terisolasi. Next.js server, build, dan file konfigurasi environment tidak dijalankan atau dimuat. Pemeriksaan tipe TypeScript dan ESLint dilakukan terpisah. Pemeriksaan tersebut tidak menggantikan uji server Next.js lengkap saat lingkungan pengujian yang diizinkan tersedia.
 

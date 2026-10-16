@@ -52,7 +52,7 @@ function loadSource(relativePath) {
 const { siteConfig, siteRoutes, absoluteUrl } = loadSource("src/lib/site.ts");
 const { pageMetadata } = loadSource("src/lib/seo.ts");
 const { coursePages, ieltsCourse, toeflCourse } = loadSource("src/lib/course-content.ts");
-const { courseLinks, programDetailPath } = loadSource("src/lib/course-routes.ts");
+const { courseLinks } = loadSource("src/lib/course-routes.ts");
 const { breadcrumbJsonLd, JsonLd } = loadSource("src/components/JsonLd.tsx");
 const CourseLanding = loadSource("src/components/program/CourseLanding.tsx").default;
 const provided = loadSource("src/lib/provided-content.ts");
@@ -109,10 +109,6 @@ for (const course of coursePages) {
   rendered.push({ course, html });
 }
 
-assert.equal(programDetailPath("IELTS Preparation"), ieltsCourse.path);
-assert.equal(programDetailPath("TOEFL iBT"), toeflCourse.path);
-assert.equal(programDetailPath("IELTS & TOEFL"), undefined);
-assert.equal(programDetailPath("Scholarship Mentoring"), undefined);
 const escapedSchema = renderToStaticMarkup(React.createElement(JsonLd, { data: { text: "</script><script>unsafe</script>" } }));
 assert.equal((escapedSchema.match(/<script/g) ?? []).length, 1);
 assert.ok(escapedSchema.includes("\\u003c"));

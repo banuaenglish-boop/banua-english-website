@@ -3,7 +3,6 @@ import SectionLabel from "@/components/ui/section-label";
 import { sanityFetch } from "@/sanity/lib/live";
 import { HOME_PROGRAMS_QUERY } from "@/sanity/lib/queries";
 import ProgramSlider from "@/components/ProgramSlider";
-import CourseLinks from "@/components/program/CourseLinks";
 
 export default async function Programs() {
   const { data: programs } = await sanityFetch({ query: HOME_PROGRAMS_QUERY });
@@ -41,7 +40,6 @@ export default async function Programs() {
         </div>
 
         {/* Horizontal Program Slider */}
-        <CourseLinks />
         <ProgramSlider programs={programs} />
       </div>
     </section>
