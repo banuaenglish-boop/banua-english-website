@@ -33,6 +33,11 @@ export const metadata: Metadata = {
   applicationName: siteConfig.name,
   authors: [{ name: siteConfig.legalName }],
   creator: siteConfig.legalName,
+  icons: {
+    icon: { url: "/logo.png", type: "image/png", sizes: "1024x1024" },
+    shortcut: "/logo.png",
+    apple: "/logo.png",
+  },
   openGraph: {
     type: "website",
     locale: siteConfig.locale,
