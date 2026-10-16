@@ -10,6 +10,12 @@ function schemas() {
   const compiled = ts.transpileModule(source, { compilerOptions: { module: ts.ModuleKind.CommonJS } }).outputText;
   const exports = {};
   new Function("exports", "require", compiled)(exports, (module) => {
+    if (module === "@/lib/webinar-countries") {
+      const countries = fs.readFileSync(new URL("../src/lib/webinar-countries.ts", import.meta.url), "utf8");
+      const countryExports = {};
+      new Function("exports", ts.transpileModule(countries, { compilerOptions: { module: ts.ModuleKind.CommonJS } }).outputText)(countryExports);
+      return countryExports;
+    }
     assert.equal(module, "sanity");
     return { defineType: (value) => value, defineField: (value) => value, defineArrayMember: (value) => value };
   });

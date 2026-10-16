@@ -12,7 +12,8 @@
     "check:seo": "node scripts/check-seo.mjs",
     "studio:dev": "sanity dev",
     "studio:deploy": "sanity deploy",
-    "sanity:seed": "node --use-system-ca scripts/sanity-seed.mjs"
+    "sanity:seed": "node --use-system-ca scripts/sanity-seed.mjs",
+    "sanity:import-webinars": "node --use-system-ca scripts/import-webinars.mjs"
   },
   "dependencies": {
     "@opennextjs/cloudflare": "1.20.10",

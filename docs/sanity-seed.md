@@ -39,7 +39,9 @@ transaksi dokumen gagal; menjalankan ulang tidak menggandakan konten seed.
 Gambar Unsplash program mentoring beasiswa yang mengembalikan 404 diganti
 dengan foto kampus lokal `public/background/univ-glasglow.jpg`.
 
-Tanggal webinar dan URL YouTube contoh belum menjadi jadwal/link asli.
+Lima tanggal webinar awal sudah dikoreksi mengikuti poster asli melalui impor
+35 webinar 2026; lihat `docs/sanity-webinars-2026.md`. URL YouTube contoh belum
+menjadi link rekaman asli.
 URL pendaftaran `/kontak` yang sudah tidak punya halaman diganti ke WhatsApp
 kontak website. Skor, capaian, dan foto alumni yang belum tersedia tetap kosong;
 schema Studio mengizinkannya. Flag homepage dan urutan mengikuti konten saat ini.

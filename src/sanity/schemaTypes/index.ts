@@ -1,4 +1,5 @@
 import { defineArrayMember, defineField, defineType } from "sanity";
+import { webinarCountries } from "@/lib/webinar-countries";
 
 /** Kunci ikon Phosphor. Komponen memetakan kunci ini ke elemen React. */
 const ICON_KEYS = [
@@ -302,11 +303,7 @@ export const webinar = defineType({
       type: "string",
       options: {
         list: [
-          { title: "🇬🇧 UK", value: "uk" },
-          { title: "🇺🇸 USA", value: "usa" },
-          { title: "🇦🇺 Australia", value: "australia" },
-          { title: "🇪🇺 Eropa", value: "eropa" },
-          { title: "🇮🇩 Indonesia", value: "indonesia" },
+          ...webinarCountries.map(({ value, label }) => ({ title: label, value })),
         ],
       },
       validation: (r) => r.required(),

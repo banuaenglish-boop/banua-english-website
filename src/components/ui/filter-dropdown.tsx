@@ -51,7 +51,7 @@ export default function FilterDropdown<T extends string>({
             onClick={() => setIsOpen(false)}
           />
           <div className="absolute left-0 top-full z-20 mt-2 w-56 origin-top-left overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-xl ring-1 ring-black/5">
-            <div className="py-1">
+            <div className="max-h-72 overflow-y-auto py-1">
               {options.map((option) => (
                 <button
                   key={option.key}

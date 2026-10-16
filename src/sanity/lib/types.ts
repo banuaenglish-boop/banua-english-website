@@ -5,6 +5,9 @@
  * schema mulai sering berubah.
  */
 
+import type { WebinarCountry } from "@/lib/webinar-countries";
+export type { WebinarCountry } from "@/lib/webinar-countries";
+
 export type ProgramMode = "online" | "offline" | "private";
 
 export type IconKey =
@@ -64,8 +67,6 @@ export type Milestone = {
 };
 
 export type Partner = { _id: string; name: string; region: string };
-
-export type WebinarCountry = "uk" | "usa" | "australia" | "eropa" | "indonesia";
 
 export type Webinar = {
   _id: string;

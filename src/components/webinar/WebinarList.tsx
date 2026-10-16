@@ -9,14 +9,11 @@ import SectionLabel from "@/components/ui/section-label";
 import DateFilter, { type DateSort } from "@/components/ui/date-filter";
 import FilterDropdown from "@/components/ui/filter-dropdown";
 import type { Webinar, WebinarCountry } from "@/sanity/lib/types";
+import { webinarCountries } from "@/lib/webinar-countries";
 
 const countryFilters: { key: WebinarCountry | "all"; label: string }[] = [
   { key: "all", label: "Semua" },
-  { key: "uk", label: "🇬🇧 UK" },
-  { key: "usa", label: "🇺🇸 USA" },
-  { key: "australia", label: "🇦🇺 Australia" },
-  { key: "eropa", label: "🇪🇺 Eropa" },
-  { key: "indonesia", label: "🇮🇩 Indonesia" },
+  ...webinarCountries.map(({ value, label }) => ({ key: value, label })),
 ];
 
 export default function WebinarList({ webinars }: { webinars: Webinar[] }) {
@@ -51,10 +48,10 @@ export default function WebinarList({ webinars }: { webinars: Webinar[] }) {
         <div className="max-w-3xl mx-auto text-center mb-12">
           <SectionLabel variant="light">Jadwal Webinar</SectionLabel>
           <h2 className="font-poppins font-bold text-3xl md:text-4xl text-[#1a2557] leading-tight mt-4">
-            Webinar <span className="text-[#2C3E8A]">Mendatang</span>
+            Webinar <span className="text-[#2C3E8A]">Beasiswa</span>
           </h2>
           <p className="text-sm md:text-base text-gray-500 mt-3 max-w-xl mx-auto">
-            Temukan sesi webinar terbaik untuk persiapan studi abroad Anda
+            Jelajahi jadwal dan arsip webinar untuk persiapan studi dan beasiswa.
           </p>
         </div>
 
