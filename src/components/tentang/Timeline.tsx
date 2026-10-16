@@ -10,7 +10,7 @@ export default async function Timeline() {
     <section className="relative overflow-hidden bg-linear-to-b from-white to-gray-50 section-y">
       <div className="section-shell relative z-10">
         {/* Header */}
-        <div className="reveal mx-auto mb-14 max-w-xl text-center">
+        <div className="mx-auto mb-14 max-w-xl text-center">
           <SectionLabel variant="light">Perjalanan Kami</SectionLabel>
           <h2 className="font-poppins heading-2 font-bold text-[#1a2557]">
             Perjalanan <span className="text-[#2C3E8A]">English Banua</span>
@@ -29,7 +29,7 @@ export default async function Timeline() {
           {milestones.map((milestone, index) => (
             <div
               key={milestone._id}
-              className={`reveal relative mb-12 flex gap-6 last:mb-0 md:items-center ${
+              className={`relative mb-12 flex gap-6 last:mb-0 md:items-center ${
                 index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
               }`}
             >
