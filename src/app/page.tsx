@@ -11,6 +11,8 @@ import { JsonLd, breadcrumbJsonLd } from "@/components/JsonLd";
 import { pageMetadata } from "@/lib/seo";
 import { siteConfig } from "@/lib/site";
 import { sanityFetch } from "@/sanity/lib/live";
+import { fetchPublishedWebinars } from "@/sanity/lib/webinars";
+import type { HomeWebinar } from "@/sanity/lib/types";
 import {
   HOME_VIDEOS_QUERY,
   HOME_WEBINARS_QUERY,
@@ -26,7 +28,7 @@ export const metadata = pageMetadata({
 export default async function Home() {
   const [{ data: webinars }, { data: recordings }, { data: testimonials }] =
     await Promise.all([
-      sanityFetch({ query: HOME_WEBINARS_QUERY }),
+      fetchPublishedWebinars<HomeWebinar[]>({ query: HOME_WEBINARS_QUERY }),
       sanityFetch({ query: HOME_VIDEOS_QUERY }),
       sanityFetch({ query: HOME_TESTIMONIALS_QUERY }),
     ]);

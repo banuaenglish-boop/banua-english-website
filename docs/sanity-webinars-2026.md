@@ -78,3 +78,16 @@ Berhasil disimpan dan dibaca ulang: **35 dokumen published** di `25ynefoe/produc
 Satu upload sempat menerima HTTP 503; pengulangan memakai kembali 34 asset yang sudah terunggah dan berhasil menyelesaikan poster terakhir sebelum transaksi dokumen. Tidak ada dokumen duplikat atau asset lama yang dihapus.
 
 Validasi project: pemeriksaan tipe TypeScript, ESLint untuk file terkait, dry run 35 poster, dan empat tes seed Sanity lolos. Status deployment website diperiksa terpisah dari penyimpanan data CMS.
+
+## Pembacaan website production
+
+Pada 17 Oktober 2026, dataset production telah mengembalikan 35 webinar
+published, tetapi website masih menampilkan lima data cadangan. Query webinar
+di halaman daftar dan beranda kini memakai `fetchPublishedWebinars`, yang
+membaca langsung dataset publik `25ynefoe/production` dengan perspective
+`published`. Data lokasi konten tersebut bukan kredensial.
+
+Pembacaan webinar tidak melewati gate data mock atau membutuhkan token preview.
+Kesalahan API diteruskan agar tidak diam-diam menerbitkan lima acara contoh.
+Cache query direvalidasi setiap 60 detik, dan beranda tetap menampilkan lima
+webinar terbaru sesuai query yang sudah ada.

@@ -6,6 +6,8 @@ import WebinarList from "@/components/webinar/WebinarList";
 import VideoGrid from "@/components/webinar/VideoGrid";
 import { JsonLd, breadcrumbJsonLd } from "@/components/JsonLd";
 import { sanityFetch } from "@/sanity/lib/live";
+import { fetchPublishedWebinars } from "@/sanity/lib/webinars";
+import type { Webinar } from "@/sanity/lib/types";
 import { WEBINARS_QUERY, VIDEOS_QUERY } from "@/sanity/lib/queries";
 
 export const metadata = pageMetadata({
@@ -17,7 +19,7 @@ export const metadata = pageMetadata({
 
 export default async function WebinarPage() {
   const [{ data: webinars }, { data: videos }] = await Promise.all([
-    sanityFetch({ query: WEBINARS_QUERY }),
+    fetchPublishedWebinars<Webinar[]>({ query: WEBINARS_QUERY }),
     sanityFetch({ query: VIDEOS_QUERY }),
   ]);
 
